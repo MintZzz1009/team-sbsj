@@ -15,33 +15,53 @@ function show_all_posting() {
             console.log(response['posting__box'])
 
             for (let i = 0; i < rows.length; i++) {
-                let post_num = i
+                let user_unique_id = rows[i][0]
                 let posting_id = rows[i][1]
-                let user_id = rows[i][8]
-                let user_email = rows[i][10]
+                let posting_text = rows[i][2]
+                let posting_topic = rows[i][3]
                 let posting_title = rows[i][4]
-                let user_desc = rows[i][12]
-                let topic_num_0 = rows[i][16]
-                let topic_num_1 = rows[i][17]
-                let topic_num_2 = rows[i][18]
-                let showpostbox = new PostingBox(post_num, posting_id, user_id, user_email, posting_title, user_desc, topic_num_0, topic_num_1, topic_num_2)
+                let user_id = rows[i][8]
+
+                let user_name = rows[i][11]
+                let user_email = rows[i][12]
+                let user_desc = rows[i][14]
+                let user_profile_img_src = rows[i][15]
+                let showpostbox =
+                    new PostingBox(
+                        user_unique_id,
+                        posting_id,
+                        posting_text,
+                        posting_topic,
+                        posting_title,
+                        user_id,
+                        user_name,
+                        user_email,
+                        user_desc)
                 showpostbox.ShowPostBox()
-                console.log(showpostbox.ShowPostBox())
             }
         }
     })
 
     class PostingBox {
-        constructor(post_num, posting_id, user_id, user_email, posting_title, user_desc, topic_num_0, topic_num_1, topic_num_2) {
-            this.post_num = post_num
+        constructor(user_unique_id,
+                    posting_id,
+                    posting_text,
+                    posting_topic,
+                    posting_title,
+                    user_id,
+                    user_name,
+                    user_email,
+                    user_desc) {
+            this.user_unique_id = user_unique_id
             this.posting_id = posting_id
-            this.user_id = user_id
-            this.user_email = user_email
+            this.posting_text = posting_text
+            this.posting_topic = posting_topic
             this.posting_title = posting_title
+            this.user_id = user_id
+            this.user_name = user_name
+            this.user_email = user_email
             this.user_desc = user_desc
-            this.topic_num_0 = topic_num_0
-            this.topic_num_1 = topic_num_1
-            this.topic_num_2 = topic_num_2
+
         }
 
         ShowPostBox() {
@@ -58,7 +78,7 @@ function show_all_posting() {
                             </div>
                         </a>
                     </div>
-                    <button id="${this.post_num}" onclick="OpenPostBox(${this.post_num}, ${this.posting_id}, '${this.user_id}','${this.user_email}','${this.posting_title}','${this.user_desc}','${this.topic_num_0}','${this.topic_num_1}','${this.topic_num_2}')" class="newsfeed__previewCard">
+                    <button id="${this.posting_id}" onclick="OpenPostBox(${this.post_num}, ${this.posting_id}, '${this.user_id}','${this.user_email}','${this.posting_title}','${this.user_desc}','${this.topic_num_0}','${this.topic_num_1}','${this.topic_num_2}')" class="newsfeed__previewCard">
                         <div class="previewCard__image"></div>
                         <div class="previewCard__contents">
                             <div class="previewCard__header">${this.posting_title}</div>
@@ -79,9 +99,25 @@ function show_all_posting() {
     }
 }
 
-function OpenPostBox(post_num, posting_id, user_id, user_email, posting_title, user_desc, topic_num_0, topic_num_1, topic_num_2) {
-    console.log(post_num, posting_id, user_id, user_email, posting_title, user_desc, topic_num_0, topic_num_1, topic_num_2);
-    let pt = posting_title;
+function OpenPostBox(user_unique_id,
+                     posting_id,
+                     posting_text,
+                     posting_topic,
+                     posting_title,
+                     user_id,
+                     user_name,
+                     user_email,
+                     user_desc) {
+    console.log(user_unique_id,
+        posting_id,
+        posting_text,
+        posting_topic,
+        posting_title,
+        user_id,
+        user_name,
+        user_email,
+        user_desc)
+    let pt = posting_text
     let ud = user_desc
     let pid = posting_id
     let temp_html = `<div class="read-modal read-hidden">
@@ -127,7 +163,7 @@ function OpenPostBox(post_num, posting_id, user_id, user_email, posting_title, u
     document.querySelector(".read-modal").classList.remove("read-hidden");
 }
 
-function comments_get () {
+function comments_get() {
     //댓글 조회 만들기
 }
 
@@ -189,7 +225,7 @@ function save_comment() {
         url: "/save_comment",
         data: {comment_give: comment, clock_give: clock},
         success: function (response) {
-             console.log(response)
+            console.log(response)
             alert(response["msg"]);
             $(".modal-comment-body").empty()
             OpenPostBox()
