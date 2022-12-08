@@ -1,7 +1,6 @@
 /* 새로 작성 */
 
 .comment-contain {
-    height: 20%;
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
@@ -11,22 +10,24 @@
 .comment-name {
     background-color: #fdf5df;
     width: 15%;
+    height: 100px;
     text-align: center;
-    padding-top: 12px;
-    
+    padding-top: 4%;
+   
 }
 
 .comment_comment {
     width: 70%;
-    height: 100%;
+    height: 100px;
     text-align: center;
     display: flex;
+ 
 }
 
 .body-comment {
     background-color: #fdf5df;
     width: 100%;
-    padding-top: 12px;
+    padding-top: 6%;
 }
 
 .comment-button {
@@ -40,4 +41,15 @@
 .button1 {
     margin: auto;
 
+}
+
+.img-button figure img {
+	-webkit-transform: scale(1.5);
+	transform: scale(1.5);
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+}
+.img-button figure:hover img {
+	-webkit-transform: scale(1);
+	transform: scale(1);
 }

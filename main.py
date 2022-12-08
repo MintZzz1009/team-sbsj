@@ -170,7 +170,7 @@ def show_comment():
     curs = db.cursor()
 
     pid_receive = int(request.form['pid_give'])
-    sql = """SELECT * FROM comment"""
+    sql = """SELECT * FROM comment ORDER BY comment_id DESC"""
 
     curs.execute(sql)
     rows = curs.fetchall()
