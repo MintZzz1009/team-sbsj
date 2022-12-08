@@ -1,4 +1,3 @@
-
 from flask import Flask, session, render_template, request, jsonify
 import pymysql
 
@@ -7,8 +6,6 @@ import os
 
 
 from datetime import datetime
-
-
 
 app = Flask(__name__)
 app.secret_key = "My_Secret_Key"
@@ -216,7 +213,13 @@ def post_NewNewsfeed():
     curs = db.cursor()
 
     posting = request.form
-    posting_user_id_give = int(posting['user_id_give'])
+
+    try:
+        print(type(session['uniq_id']))
+    except:
+        return jsonify({'msg': '로그인 후 작성 가능합니다.'})
+
+    posting_user_id_give = session['uniq_id']
     posting_title_give = posting['posting_title_give']
     posting_text_give = posting['posting_text_give']
     posting_topic_give = posting['posting_topic_give']
@@ -236,6 +239,7 @@ def post_NewNewsfeed():
 @app.route('/mypage')
 def mymage_main():
     return render_template('mypage.html')
+
 
 # 마이페이지 불러오기
 @app.route("/mypage/mypage_reload", methods=["GET"])
@@ -301,9 +305,9 @@ def mypage_upload():
 
     return jsonify({'msg': '저장완료!'})
 
+
 @app.route('/saveCharacters', methods=['POST'])
 def saveCharacters():
-
     db = pymysql.connect(host=hostname, user=username, db='sparta_sbsj', password=userpw, charset='utf8')
     curs = db.cursor()
 
@@ -321,8 +325,7 @@ def saveCharacters():
     db.commit()
     db.close()
 
-    return jsonify({'msg':'저장완료'})
-
+    return jsonify({'msg': '저장완료'})
 
 
 @app.route('/saveUserInfoInMyPage', methods=['POST'])
@@ -359,6 +362,7 @@ def saveUserInfoInMyPage():
     db.close()
 
     return jsonify({"msg": "수정 완료!"})
+
 
 @app.route('/uploadProfileImg', methods=['POST'])
 def upload():
@@ -554,6 +558,7 @@ def showNewsfeedOnlyMine():
     db.close()
 
     return jsonify({'result': result})
+
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=5000, debug=True)
