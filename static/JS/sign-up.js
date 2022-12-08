@@ -11,8 +11,13 @@ function user_id_confirm() {
     let user_id = $("#user_id").val();
     console.log('id: ', user_id)
     typeof (user_id)
-
-    if (user_id.includes(' ') || user_id.includes(',') === true) {
+    if ( user_id === '' ) {
+        $('#user_id').addClass('is-invalid');
+        $('#user_id_confirm_button').after(`<div id="id-feedback" class="invalid-feedback" style="text-align: right">아이디를 입력해주세요 😭</div>`)
+        console.log('아이디 값이 없음')
+        return
+    }
+    if ( user_id.includes(' ') === true || user_id.includes(',') === true ) {
         $('#user_id').addClass('is-invalid');
         $('#user_id_confirm_button').after(`<div id="id-feedback" class="invalid-feedback" style="text-align: right">아이디에 "공백"이나 ","가 포함되어서는 안됩니다 😭</div>`)
         console.log('아이디에 공백 및 쉼표 포함되어 실패')
@@ -54,8 +59,8 @@ function user_pw_length_confirm() {
     let user_pw = $("#user_pw").val();
     console.log('1번째 칸 비밀번호: ', user_pw)
     console.log('비밀번호 글자 수: ', user_pw.length)
-    
-    if (user_pw.includes(' ') || user_pw.includes(',') === true) {
+
+    if ( user_pw.includes(' ') == true || user_pw.includes(',') === true ) {
         $('#user_pw').addClass('is-invalid');
         $('#user_pw').after(`<div id="pw-length-feedback" class="invalid-feedback" style="text-align: right">비밀번호에 "공백"이나 ","가 포함되어서는 안됩니다 😭</div>`)
         console.log('비밀번호에 공백 및 쉼표 포함되어 실패')
@@ -110,8 +115,8 @@ function user_name_confirm() {
     console.log('이름 :', name.value)
 
     if (name.value.includes(' ') || name.value.includes(',') === true) {
-        name.addClass('is-invalid');
-        name.after(`<div id="name-feedback" class="invalid-feedback" style="text-align: right">이름에 "공백"이나 ","가 포함되어서는 안됩니다 😭</div>`)
+        $('#name-feedback').addClass('is-invalid');
+        $('#name-feedback').after(`<div id="name-feedback" class="invalid-feedback" style="text-align: right">이름에 "공백"이나 ","가 포함되어서는 안됩니다 😭</div>`)
         console.log('이름에 공백 및 쉼표 포함되어 실패')
         return false
     } else if (name.value.length >= 1) {
