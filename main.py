@@ -20,7 +20,7 @@ def user_id_confirm():
     user_id_receive = request.form['user_id_give']
 
     # mySQL db 접속
-    db = pymysql.connect(host='121.166.127.220', user='haksoo', db='sparta_sbsj', password='12345678', charset='utf8')
+    db = pymysql.connect(host='121.166.127.220', user='jungmin', db='sparta_sbsj', password='12345678', charset='utf8')
     curs = db.cursor()
 
     #  전체 데이터 조회 후 data_list 변수에 할당
@@ -49,7 +49,7 @@ def sign_up():
 
     data_receive = (user_id_receive, user_pw_receive, user_name_receive, user_email_receive)
 
-    db = pymysql.connect(host='121.166.127.220', user='haksoo', db='sparta_sbsj', password='12345678', charset='utf8')
+    db = pymysql.connect(host='121.166.127.220', user='jungmin', db='sparta_sbsj', password='12345678', charset='utf8')
     curs = db.cursor()
 
     sql = "insert into user (user_id, user_pw, user_name, user_email) values(%s, %s, %s, %s);"
@@ -67,7 +67,7 @@ def log_in():
     input_id_receive = request.form['input_id_give']
     input_pw_receive = request.form['input_pw_give']
 
-    db = pymysql.connect(host='121.166.127.220', user='haksoo', db='sparta_sbsj', password='12345678', charset='utf8')
+    db = pymysql.connect(host='121.166.127.220', user='jungmin', db='sparta_sbsj', password='12345678', charset='utf8')
     curs = db.cursor()
 
     sql = "SELECT * FROM sparta_sbsj.`user` u"
@@ -115,7 +115,7 @@ def log_out():
 # 뉴스피드 조회
 @app.route('/main', methods=['GET'])
 def get_AllNewsfeed():
-    db = pymysql.connect(host='121.166.127.220', user='haksoo', db='sparta_sbsj', password='12345678', charset='utf8')
+    db = pymysql.connect(host='121.166.127.220', user='jungmin', db='sparta_sbsj', password='12345678', charset='utf8')
     curs = db.cursor()
     sql = """SELECT * FROM posting p 
                 INNER JOIN `user` u ON p.user_unique_id = u.user_unique_id
@@ -131,7 +131,7 @@ def get_AllNewsfeed():
 # 댓글 저장
 @app.route('/save_comment', methods=['POST'])
 def save_comment():
-    db = pymysql.connect(host='121.166.127.220', user='haksoo', db='sparta_sbsj', password='12345678', charset='utf8')
+    db = pymysql.connect(host='121.166.127.220', user='jungmin', db='sparta_sbsj', password='12345678', charset='utf8')
     curs = db.cursor()
     comment_receive = request.form['comment_give']
     clock_receive = request.form['clock_give']
@@ -154,7 +154,7 @@ def save_comment():
 # 댓글 조회
 @app.route('/show_comment', methods=['GET'])
 def show_comment():
-    db = pymysql.connect(host='121.166.127.220', user='haksoo', db='sparta_sbsj', password='12345678', charset='utf8')
+    db = pymysql.connect(host='121.166.127.220', user='jungmin', db='sparta_sbsj', password='12345678', charset='utf8')
     curs = db.cursor()
 
     sql = """SELECT comment_id, comments, comment_created_at FROM comment"""
@@ -177,14 +177,14 @@ def show_comment():
 # 댓글 수정
 @app.route('/update/comment', methods=['POST'])
 def update_comment():
-    db = pymysql.connect(host='121.166.127.220', user='haksoo', db='sparta_sbsj', password='12345678', charset='utf8')
+    db = pymysql.connect(host='121.166.127.220', user='jungmin', db='sparta_sbsj', password='12345678', charset='utf8')
     curs = db.cursor()
 
     edit_done_receive = request.form['edit_done_give']
     edit_comment_id_receive = request.form['edit_comment_id_give']
 
     sql = """UPDATE comment SET comments = %s WHERE comment_id = %s"""
-    curs.execute(sql, (edit_done_receive, edit_comment_id_receive))
+    curs.execute(sql, (edit_comment_id_receive, edit_done_receive))
 
     db.commit()
     db.close()
