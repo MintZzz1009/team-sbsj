@@ -23,9 +23,8 @@ function show_all_posting() {
                 let posting_topic = rows[i][3]
                 let posting_title = rows[i][4]
                 let user_id = rows[i][8]
-
-                let user_name = rows[i][11]
-                let user_email = rows[i][12]
+                let user_name = rows[i][10]
+                let user_email = rows[i][11]
                 let user_desc = rows[i][13]
                 let user_profile_img_src = rows[i][15]
                 let showpostbox =
