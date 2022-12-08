@@ -1,46 +1,47 @@
 $(document).ready(function () {
-  show_all_posting();
+    show_all_posting();
+
 });
+
 
 // 뉴스피드 조회
 function show_all_posting() {
-  console.log("show_all_posting 작동 시작");
-  $.ajax({
-    type: "GET",
-    url: "main",
-    data: {},
-    success: function (response) {
-      console.log("show_all_posting 응답 성공");
-      let rows = response["posting__box"];
-      console.log(response["posting__box"]);
+    console.log('show_all_posting 작동 시작')
+    $.ajax({
+        type: "GET",
+        url: "main",
+        data: {},
+        success: function (response) {
+            console.log('show_all_posting 응답 성공')
+            let rows = response['posting__box']
+            console.log(response['posting__box'])
 
-      for (let i = 0; i < rows.length; i++) {
-        let user_unique_id = rows[i][0];
-        let posting_id = rows[i][1];
-        let posting_text = rows[i][2];
-        let posting_topic = rows[i][3];
-        let posting_title = rows[i][4];
-        let user_id = rows[i][8];
-
-        let user_name = rows[i][11];
-        let user_email = rows[i][12];
-        let user_desc = rows[i][14];
-        let user_profile_img_src = rows[i][15];
-        let showpostbox = new PostingBox(
-          user_unique_id,
-          posting_id,
-          posting_text,
-          posting_topic,
-          posting_title,
-          user_id,
-          user_name,
-          user_email,
-          user_desc
-        );
-        showpostbox.ShowPostBox();
-      }
-    },
-  });
+            for (let i = 0; i < rows.length; i++) {
+                let user_unique_id = rows[i][0]
+                let posting_id = rows[i][1]
+                let posting_text = rows[i][2]
+                let posting_topic = rows[i][3]
+                let posting_title = rows[i][4]
+                let user_id = rows[i][8]
+                let user_name = rows[i][10]
+                let user_email = rows[i][11]
+                let user_desc = rows[i][13]
+                let user_profile_img_src = rows[i][15]
+                let showpostbox =
+                    new PostingBox(
+                        user_unique_id,
+                        posting_id,
+                        posting_text,
+                        posting_topic,
+                        posting_title,
+                        user_id,
+                        user_name,
+                        user_email,
+                        user_desc)
+                showpostbox.ShowPostBox()
+            }
+        }
+    })
 
   class PostingBox {
     constructor(
@@ -79,13 +80,11 @@ function show_all_posting() {
                             </div>
                         </a>
                     </div>
-                    <button id="${this.posting_id}" onclick="OpenPostBox(${this.post_num}, ${this.posting_id}, '${this.user_id}', '${this.user_email}', '${this.posting_title}', '${this.user_desc}', '${this.topic_num_0}', '${this.topic_num_1}', '${this.topic_num_2}')" class="newsfeed__previewCard">
+                    <button id="${this.posting_id}" onclick="OpenPostBox(${this.user_unique_id}, ${this.posting_id}, '${this.posting_title}', '${this.posting_text}')" class="newsfeed__previewCard">
                         <div class="previewCard__image"></div>
                         <div class="previewCard__contents">
                             <div class="previewCard__header">${this.posting_title}</div>
-                            <div class="previewCard__desc">
-                                ${this.user_desc}
-                            </div>
+                            <div class="previewCard__desc">${this.user_desc}</div>
                             <div class="previewCard__topics">
                                 <div class="previewCard__topics__tag">${this.topic_num_0}</div>
                                 <div class="previewCard__topics__tag">${this.topic_num_1}</div>
@@ -100,21 +99,16 @@ function show_all_posting() {
   }
 }
 
-function OpenPostBox(
-    user_unique_id,
-    posting_id,
-    posting_text,
-    posting_topic,
-    posting_title,
-    user_id,
-    user_name,
-    user_email,
-    user_desc) {
-
-  let pt = posting_text;
-  let ud = user_desc;
-  let pid = posting_id;
-
+function OpenPostBox(user_unique_id,
+                     posting_id,
+                     posting_title,
+                     posting_text,
+                     user_id,
+) {
+    let p_text = posting_text
+    let pid = posting_id
+    let p_title = posting_title
+    let uid = user_id
 
   $.ajax({
     type: "POST",
@@ -122,7 +116,6 @@ function OpenPostBox(
     data: { pid_give: pid },
     success: function (response) {
       let rows = response["msg"];
-      console.log(rows)
 
       for (let i = 0; i < rows.length; i++) {
         let comment_id = rows[i]["comment_id"];
@@ -148,11 +141,12 @@ function OpenPostBox(
                                 <div class="clock">
                                     ${time_stemp(`${clock}`)}
                                 </div>
-                                    `;
-        $(".modal-comment-body").append(temp_html);
-      }
-    },
-  });
+                                    `
+                $(".modal-comment-body").append(temp_html)
+            }
+
+        }
+    })
 
   let temp_html = `<div class="read-modal read-hidden">
                                 <div class="read-modal-overlay" onclick="OffModal()"></div>
@@ -161,7 +155,7 @@ function OpenPostBox(
                                         <div class="read-modal-user-img">
                                             <img src="../static/image/sbsj_signature.PNG" class="read-modal-user-img-img">
                                         </div>
-                                        <div>${pt}</div>
+                                        <div>${p_title}</div>
                                         <div class="read-modal-sbsj-img">
                                             <button id="read-exit-posting" onclick="OffModal()"><img style="float: right;height: 70px; width:70px"
                                                                                 src="static/image/sbsj_signature.png"
@@ -170,7 +164,7 @@ function OpenPostBox(
                                         </div>
                                     </div>
                                     <div class="read-modal-posting-contents">
-                                        ${ud}
+                                        ${p_text}
                                     </div>
                                     <div class="read-modal-comment-form">
                                         <div class="modal-comment-container">
@@ -226,25 +220,24 @@ function topic_value_get() {
 
 // 게시글 생성
 function new_posting() {
-  console.log("new posting 함수 시작");
-  let title = $("#posting_title").val();
-  let text = $("#posting_text").val();
-  let topic = topic_value_get();
-  let user = 5;
-  $.ajax({
-    type: "POST",
-    url: "/mypage/newsfeed",
-    data: {
-      user_id_give: user,
-      posting_title_give: title,
-      posting_text_give: text,
-      posting_topic_give: topic,
-    },
-    success: function (response) {
-      alert(response["msg"]);
-      window.location.reload();
-    },
-  });
+    console.log('new posting 함수 시작')
+    let title = $("#posting_title").val();
+    let text = $("#posting_text").val();
+    let topic = topic_value_get();
+
+    $.ajax({
+        type: "POST",
+        url: "/mypage/newsfeed",
+        data: {
+            posting_title_give: title,
+            posting_text_give: text,
+            posting_topic_give: topic,
+        },
+        success: function (response) {
+            alert(response["msg"]);
+            window.location.reload();
+        },
+    });
 }
 
 // 댓글 저장
@@ -286,6 +279,7 @@ function addInput(comment_id) {
 // 댓글 수정 완료
 
 function update_comment(comment_id) {
+
   let edit_comment_id = $(`#contain_${comment_id} input`).val();
 
   $.ajax({

@@ -12,7 +12,7 @@
           data: {topicNumGive : topicNum},
           success: function(response){
 
-            document.getElementById("newsfeed__main").innerHTML = "";
+            document.getElementById("newsfeed__expansion").innerHTML = "";
 
             console.log(response['result']);
             let rows = response['result'];
@@ -34,7 +34,7 @@
                 tempHTML += `<div class="previewCard__topics__tag">${topicList[rows[i]['topics_array'][j]]}</div>`
               }
 
-              $('#newsfeed__main').append(`
+              $('#newsfeed__expansion').append(`
                                             <div class="newsfeed__newsfeed">
                                               <!-- Button trigger modal -->
                                               <div class="newsfeed__info">
@@ -126,7 +126,7 @@
 
                 let rows = response['result'];
 
-                document.getElementById('newsfeed__main').innerHTML= '';
+                document.getElementById('newsfeed__expansion').innerHTML= '';
 
                 for (let i = 0; i < rows.length; i++){
                     let tempHtml = ``;
@@ -146,7 +146,7 @@
 
                     console.log(rows[i]['posting_text'].length);
 
-                    $('#newsfeed__main').append(`<div class="newsfeed__newsfeed">
+                    $('#newsfeed__expansion').append(`<div class="newsfeed__newsfeed">
                                                       <!-- Button trigger modal -->
                                                       <div class="newsfeed__info">
                                                         <a
