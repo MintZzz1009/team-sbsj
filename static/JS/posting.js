@@ -16,63 +16,72 @@ function show_all_posting() {
             let rows = response['posting__box']
             console.log(response['posting__box'])
 
-            for (let i = 0; i < rows.length; i++) {
+            for (let i = rows.length - 1; i >= 0; i--) {
                 let user_unique_id = rows[i][0]
-                let posting_id = rows[i][1]
-                let posting_text = rows[i][2]
-                let posting_topic = rows[i][3]
-                let posting_title = rows[i][4]
-                let user_id = rows[i][8]
-                let user_name = rows[i][10]
-                let user_email = rows[i][11]
-                let user_desc = rows[i][13]
-                let user_profile_img_src = rows[i][15]
+                let user_id = rows[i][1]
+                let user_pw = rows[i][2]
+                let user_name = rows[i][3]
+                let user_email = rows[i][4]
+                let user_topic = rows[i][5]
+                let user_desc = rows[i][6]
+                let user_created_at = rows[i][7]
+                let user_profile_img_src = rows[i][8]
+                // let user_unique_id = rows[i][9]
+                let posting_id = rows[i][10]
+                let posting_text = rows[i][11]
+                let posting_topic = rows[i][12]
+                let posting_title = rows[i][13]
+                let comment = rows[i][14]
+                let posting_created_at = rows[i][15]
+                // let posting_id= rows[i][16]
+                let topic_num_0 = rows[i][17]
+                let topic_num_1 = rows[i][18]
+                let topic_num_2 = rows[i][19]
+                let topic_num_3 = rows[i][20]
+                let topic_num_4 = rows[i][21]
+                let topic_num_5 = rows[i][22]
+                let topic_num_6 = rows[i][23]
+                let topic_num_7 = rows[i][24]
+                let topic_num_8 = rows[i][25]
+                let topic_num_9 = rows[i][26]
+                let topic_num_10 = rows[i][27]
+                let topic_num_11 = rows[i][28]
+                let topic_num_12 = rows[i][29]
+                let topic_num_13 = rows[i][30]
                 let showpostbox =
-                    new PostingBox(
-                        user_unique_id,
-                        posting_id,
-                        posting_text,
-                        posting_topic,
-                        posting_title,
-                        user_id,
-                        user_name,
-                        user_email,
-                        user_desc)
+                    new PostingBox(user_unique_id, user_id, user_name, user_email, user_desc, user_profile_img_src, posting_id, posting_text, posting_topic, posting_title)
                 showpostbox.ShowPostBox()
             }
         }
     })
 
-  class PostingBox {
-    constructor(
-      user_unique_id,
-      posting_id,
-      posting_text,
-      posting_topic,
-      posting_title,
-      user_id,
-      user_name,
-      user_email,
-      user_desc
-    ) {
-      this.user_unique_id = user_unique_id;
-      this.posting_id = posting_id;
-      this.posting_text = posting_text;
-      this.posting_topic = posting_topic;
-      this.posting_title = posting_title;
-      this.user_id = user_id;
-      this.user_name = user_name;
-      this.user_email = user_email;
-      this.user_desc = user_desc;
-    }
+    class PostingBox {
+        constructor(user_unique_id, user_id, user_name, user_email, user_desc, user_profile_img_src, posting_id, posting_text, posting_topic, posting_title) {
+            this.user_unique_id = user_unique_id
+            this.user_id = user_id
+            this.user_name = user_name
+            this.user_email = user_email
+            this.user_desc = user_desc
+            this.user_profile_img_src = user_profile_img_src
+            this.posting_id = posting_id
+            this.posting_text = posting_text
+            this.posting_topic = posting_topic
+            this.posting_title = posting_title
+            const topicList = ['🌕 전체', '📡 중개 플랫폼', '📷 라이프스타일', '💰 금융', '👫 소셜',
+                '🎙 미디어', '✏️ 교육', '🚲 생산성', '🔗 블록체인', '💻 노코드', '🤖 인공지능',
+                '🏘 커뮤니티', '📊 분석툴', '🎨 디자인'
+            ]
 
-    ShowPostBox() {
-      let temp_html = `
+        }
+
+        ShowPostBox() {
+            console.log(this.posting_topic)
+            let temp_html = `
                 <div class="newsfeed__newsfeed">
                     <div class="newsfeed__info">
                         <a href="#" class="membersCards__list__eachCards newsfeed__writer">
                             <div class="eachCards__inner-content-wrapper">
-                                <div class="eachCards__avatar"></div>
+                                <div style="overflow: hidden;" class="eachCards__avatar"><img style="object-fit: cover; width: 100%" src="${this.user_profile_img_src}" alt="이미지" onerror="this.src='static/image/sbsj_signature.png'"></div>
                                 <div class="eachCards__info">
                                     <div class="eachCards__info__id">${this.user_id}</div>
                                     <div class="eachCards__info__email">${this.user_email}</div>
@@ -81,22 +90,28 @@ function show_all_posting() {
                         </a>
                     </div>
                     <button id="${this.posting_id}" onclick="OpenPostBox(${this.user_unique_id}, ${this.posting_id}, '${this.posting_title}', '${this.posting_text}')" class="newsfeed__previewCard">
-                        <div class="previewCard__image"></div>
+                        <div class="previewCard__image" style="overflow: hidden;"><img style="object-fit: cover; width: 100%" src="/static/image/fall.png"></div>
                         <div class="previewCard__contents">
                             <div class="previewCard__header">${this.posting_title}</div>
-                            <div class="previewCard__desc">${this.user_desc}</div>
-                            <div class="previewCard__topics">
-                                <div class="previewCard__topics__tag">${this.topic_num_0}</div>
-                                <div class="previewCard__topics__tag">${this.topic_num_1}</div>
-                                <div class="previewCard__topics__tag">${this.topic_num_2}</div>
+                            <div class="previewCard__desc">${this.posting_text}</div>
+                            <div class="previewCard__topics" id="topics_${this.posting_id}">
+                                
                             </div>
                         </div>
                     </button>
                 </div>
             </div>`;
-      $("#newsfeed__expansion").append(temp_html);
+            $("#newsfeed__expansion").append(temp_html);
+            for (let i = 1; i <= topicList.length - 1; i++) {
+                if (this.posting_topic.includes(i) == true) {
+                    temp_html = `<div class="previewCard__topics__tag">${topicList[i]}</div>`
+                    $(`#topics_${this.posting_id}`).append(temp_html);
+                }
+
+            }
+
+        }
     }
-  }
 }
 
 function OpenPostBox(user_unique_id,
@@ -110,12 +125,12 @@ function OpenPostBox(user_unique_id,
     let p_title = posting_title
     let uid = user_id
 
-  $.ajax({
-    type: "POST",
-    url: "/show_comment",
-    data: { pid_give: pid },
-    success: function (response) {
-      let rows = response["msg"];
+    $.ajax({
+        type: "POST",
+        url: "/show_comment",
+        data: {pid_give: pid},
+        success: function (response) {
+            let rows = response["msg"];
 
       console.log(`${rows}  user_name 확인`)
       for (let i = 0; i < rows.length; i++) {
@@ -151,7 +166,7 @@ function OpenPostBox(user_unique_id,
         }
     })
 
-  let temp_html = `<div class="read-modal read-hidden">
+    let temp_html = `<div class="read-modal read-hidden">
                                 <div class="read-modal-overlay" onclick="OffModal()"></div>
                                 <div class="read-modal-content">
                                     <div class="read-modal-posting-title">
@@ -190,35 +205,35 @@ function OpenPostBox(user_unique_id,
                                     </div>
                                 </div>
                             </div>`;
-  $("#newsfeed__expansion").append(temp_html);
-  document.querySelector(".read-modal").classList.remove("read-hidden");
+    $("#newsfeed__expansion").append(temp_html);
+    document.querySelector(".read-modal").classList.remove("read-hidden");
 }
 
 function comments_get() {
-  //댓글 조회 만들기
+    //댓글 조회 만들기
 }
 
 // 모달창 끄기
 function OffModal() {
-  $(".read-modal").remove();
+    $(".read-modal").remove();
 }
 
 // 게시글 작성시 topic 개수 선택 설정하기
 function topic_value_get() {
-  const topic_values = [];
-  var topic = $("input[name='topic']:checked");
+    const topic_values = [];
+    var topic = $("input[name='topic']:checked");
 
-  for (let i = 0; i < topic.length; i++) {
-    console.log(topic[i]);
-    topic_values.push(topic[i].value);
-    if (topic_values.length > 3) {
-      alert("토픽은 3개까지 설정 가능합니다.");
-      return;
+    for (let i = 0; i < topic.length; i++) {
+        console.log(topic[i]);
+        topic_values.push(topic[i].value);
+        if (topic_values.length > 3) {
+            alert("토픽은 3개까지 설정 가능합니다.");
+            return;
+        }
     }
-  }
-  let topic_value_join_string = topic_values.join(" ");
+    let topic_value_join_string = topic_values.join(" ");
 
-  return topic_value_join_string;
+    return topic_value_join_string;
 }
 
 // 게시글 생성
@@ -285,44 +300,44 @@ function update_comment(comment_id) {
 
   let edit_comment_id = $(`#contain_${comment_id} input`).val();
 
-  $.ajax({
-    type: "POST",
-    url: "/update/comment",
-    data: { edit_done_give: comment_id, edit_comment_id_give: edit_comment_id },
-    success: function (response) {
-      alert(response["msg"])
-      window.location.reload()
-    },
-  });
+    $.ajax({
+        type: "POST",
+        url: "/update/comment",
+        data: {edit_done_give: comment_id, edit_comment_id_give: edit_comment_id},
+        success: function (response) {
+            alert(response["msg"])
+            window.location.reload()
+        },
+    });
 }
 
 // 댓글 삭제
 function delete_comment(comment_id) {
-  console.log(comment_id)
-  $.ajax({
-    type: "POST",
-    url: "/delete/comment",
-    data: {delete_give: comment_id},
-    success: function (response) {
-      alert(response["msg"])
-      window.location.reload()
-    }
-  })
+    console.log(comment_id)
+    $.ajax({
+        type: "POST",
+        url: "/delete/comment",
+        data: {delete_give: comment_id},
+        success: function (response) {
+            alert(response["msg"])
+            window.location.reload()
+        }
+    })
 }
 
 // 몇분 전 시간 표시
 function time_stemp(dt) {
-  const today_time = Date.now();
-  const past_time = dt;
-  let set_time = today_time - past_time;
+    const today_time = Date.now();
+    const past_time = dt;
+    let set_time = today_time - past_time;
 
-  if (set_time < 60000) {
-    return `${parseInt(set_time / 1000)}초 전`;
-  } else if (set_time < 3600000) {
-    return `${parseInt(set_time / 1000 / 60)}분 전`;
-  } else if (set_time < 86400000) {
-    return `${parseInt(set_time / 1000 / 60 / 60)}시간 전`;
-  } else {
-    return `${parseInt(set_time / 1000 / 60 / 60 / 24)}일 전`;
-  }
+    if (set_time < 60000) {
+        return `${parseInt(set_time / 1000)}초 전`;
+    } else if (set_time < 3600000) {
+        return `${parseInt(set_time / 1000 / 60)}분 전`;
+    } else if (set_time < 86400000) {
+        return `${parseInt(set_time / 1000 / 60 / 60)}시간 전`;
+    } else {
+        return `${parseInt(set_time / 1000 / 60 / 60 / 24)}일 전`;
+    }
 }

@@ -9,11 +9,15 @@ from datetime import datetime
 app = Flask(__name__)
 app.secret_key = "My_Secret_Key"
 
+print(os.getcwd())
 # db = pymysql.connect(host='121.166.127.220', user='haksoo', db='sparta_sbsj', password='12345678', charset='utf8')
 # db = pymysql.connect(host='localhost', user='root', db='sparta_sbsj', password='bobo1200', charset='utf8')
 hostname = '121.166.127.220'
 username = 'jungmin'
 userpw = '12345678'
+
+print(os.getcwd())
+
 
 @app.route("/")
 def home():
@@ -127,8 +131,7 @@ def get_AllNewsfeed():
     db = pymysql.connect(host=hostname, user=username, db='sparta_sbsj', password=userpw, charset='utf8')
 
     curs = db.cursor()
-    sql = """SELECt * FROM posting p 
-                INNER JOIN `user` u ON p.user_unique_id = u.user_unique_id GROUP BY posting_id
+    sql = """SELECT * FROM `user` u inner JOIN posting p ON p.user_unique_id = u.user_unique_id left JOIN topics_in_posting tip ON p.posting_id = tip.posting_id 
             """
     curs.execute(sql)
     rows = curs.fetchall()
@@ -429,8 +432,8 @@ def upload():
     # db = pymysql.connect(dbAdress)
     curs = db.cursor()
     # file = request.files.getlist('files[0]')
-    # dir = "static/img/profileImg/"
-    dir = "C:\\project/"
+    dir = "static/img/profileImg/"
+    # dir = "C:\\project/"
     file = request.files['profileImg']
 
     # print("request" + request)
@@ -479,7 +482,7 @@ def upload():
 
     print(os.getcwd())
 
-    os.chdir('C:\\project/')
+    os.chdir(dir)
     print(os.getcwd())
     # os.chdir(dir)
 
@@ -489,7 +492,7 @@ def upload():
     # temp = os.path.basename(filename)
     # print(temp)
 
-    # os.chdir("../../../")
+    os.chdir("../../../")
     print(os.getcwd())
     dir = dir + filename
 
@@ -520,6 +523,7 @@ def showNewsfeedFilteredByTopic():
     sql = '''
         select posting_id from topics_in_posting
         where topic_num_%s = 1
+        order by posting_id desc
     '''
 
     # curs.execute(sql)
@@ -568,7 +572,7 @@ def showNewsfeedFilteredByTopic():
                 'user_name': userInfo[0][0],
                 'user_email': userInfo[0][1],
                 'user_profile_img_src': userInfo[0][2],
-                # 'user_unique_id' : temp[j][0],
+                'user_unique_id' : temp[j][0],
                 'posting_title': temp[j][1],
                 'posting_text': temp[j][2],
                 'topics_array': topicsArray
@@ -586,13 +590,14 @@ def showNewsfeedFilteredByTopic():
 
 @app.route('/showNewsfeedOnlyMine', methods=['POST'])
 def showNewsfeedOnlyMine():
+    print("실향")
     db = pymysql.connect(host=hostname, user=username, db='sparta_sbsj', password=userpw, charset='utf8')
     # db = pymysql.connect(dbAdress)
     curs = db.cursor()
 
     userIdReceive = request.form['userIdGive']
 
-    print(userIdReceive)
+    # print(userIdReceive)
     sql = '''
         select user_unique_id, user_name, user_email, user_profile_img_src from user
         where user_id = %s
@@ -605,12 +610,12 @@ def showNewsfeedOnlyMine():
     sql = '''
         select posting_id, posting_title, posting_text, posting_topic from posting p 
         where user_unique_id = %s
+        order by posting_id desc
     '''
 
     curs.execute(sql, userUniqueId)
     rows = curs.fetchall()
     result = []
-
     for i in range(len(rows)):
         dic = {
             'posting_id': rows[i][0],
