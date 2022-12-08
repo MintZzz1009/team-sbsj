@@ -12,9 +12,11 @@ function show_all_posting() {
         success: function (response) {
             console.log('show_all_posting 응답 성공')
             let rows = response['posting__box']
+            console.log(response['posting__box'])
 
             for (let i = 0; i < rows.length; i++) {
                 let post_num = i
+                let posting_id = rows[i][1]
                 let user_id = rows[i][8]
                 let user_email = rows[i][10]
                 let posting_title = rows[i][4]
@@ -22,7 +24,7 @@ function show_all_posting() {
                 let topic_num_0 = rows[i][16]
                 let topic_num_1 = rows[i][17]
                 let topic_num_2 = rows[i][18]
-                let showpostbox = new PostingBox(post_num, user_id, user_email, posting_title, user_desc, topic_num_0, topic_num_1, topic_num_2)
+                let showpostbox = new PostingBox(post_num, posting_id, user_id, user_email, posting_title, user_desc, topic_num_0, topic_num_1, topic_num_2)
                 showpostbox.ShowPostBox()
                 console.log(showpostbox.ShowPostBox())
             }
@@ -30,8 +32,9 @@ function show_all_posting() {
     })
 
     class PostingBox {
-        constructor(post_num, user_id, user_email, posting_title, user_desc, topic_num_0, topic_num_1, topic_num_2) {
+        constructor(post_num, posting_id, user_id, user_email, posting_title, user_desc, topic_num_0, topic_num_1, topic_num_2) {
             this.post_num = post_num
+            this.posting_id = posting_id
             this.user_id = user_id
             this.user_email = user_email
             this.posting_title = posting_title
@@ -55,7 +58,7 @@ function show_all_posting() {
                             </div>
                         </a>
                     </div>
-                    <button id="${this.post_num}" onclick="OpenPostBox(${this.post_num}, '${this.user_id}','${this.user_email}','${this.posting_title}','${this.user_desc}','${this.topic_num_0}','${this.topic_num_1}','${this.topic_num_2}')" class="newsfeed__previewCard">
+                    <button id="${this.post_num}" onclick="OpenPostBox(${this.post_num}, ${this.posting_id}, '${this.user_id}','${this.user_email}','${this.posting_title}','${this.user_desc}','${this.topic_num_0}','${this.topic_num_1}','${this.topic_num_2}')" class="newsfeed__previewCard">
                         <div class="previewCard__image"></div>
                         <div class="previewCard__contents">
                             <div class="previewCard__header">${this.posting_title}</div>
@@ -76,10 +79,11 @@ function show_all_posting() {
     }
 }
 
-function OpenPostBox(post_num, user_id, user_email, posting_title, user_desc, topic_num_0, topic_num_1, topic_num_2) {
-    console.log(post_num, user_id, user_email, posting_title, user_desc, topic_num_0, topic_num_1, topic_num_2);
+function OpenPostBox(post_num, posting_id, user_id, user_email, posting_title, user_desc, topic_num_0, topic_num_1, topic_num_2) {
+    console.log(post_num, posting_id, user_id, user_email, posting_title, user_desc, topic_num_0, topic_num_1, topic_num_2);
     let pt = posting_title;
     let ud = user_desc
+    let pid = posting_id
     let temp_html = `<div class="read-modal read-hidden">
                                 <div class="read-modal-overlay" onclick="OffModal()"></div>
                                 <div class="read-modal-content">
@@ -103,7 +107,7 @@ function OpenPostBox(post_num, user_id, user_email, posting_title, user_desc, to
                                             <div class="modal-comment-title">
                                                 댓글
                                             </div>
-                                            <div class="modal-comment-body">
+                                            <div id="${pid}" class="modal-comment-body">
                                                 
                                             </div>
                                             <div class="modal-comment-bottom">
@@ -121,6 +125,10 @@ function OpenPostBox(post_num, user_id, user_email, posting_title, user_desc, to
                             </div>`
     $('#newsfeed__expansion').append(temp_html);
     document.querySelector(".read-modal").classList.remove("read-hidden");
+}
+
+function comments_get () {
+    //댓글 조회 만들기
 }
 
 // 모달창 끄기
