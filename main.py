@@ -9,11 +9,13 @@ from datetime import datetime
 app = Flask(__name__)
 app.secret_key = "My_Secret_Key"
 
+print(os.getcwd())
 # db = pymysql.connect(host='121.166.127.220', user='haksoo', db='sparta_sbsj', password='12345678', charset='utf8')
 # db = pymysql.connect(host='localhost', user='root', db='sparta_sbsj', password='bobo1200', charset='utf8')
 hostname = 'localhost'
 username = 'root'
 userpw = 'bobo1200'
+
 
 @app.route("/")
 def home():
@@ -127,8 +129,7 @@ def get_AllNewsfeed():
     db = pymysql.connect(host=hostname, user=username, db='sparta_sbsj', password=userpw, charset='utf8')
 
     curs = db.cursor()
-    sql = """SELECt * FROM posting p 
-                INNER JOIN `user` u ON p.user_unique_id = u.user_unique_id GROUP BY posting_id
+    sql = """SELECT * FROM `user` u inner JOIN posting p ON p.user_unique_id = u.user_unique_id left JOIN topics_in_posting tip ON p.posting_id = tip.posting_id 
             """
     curs.execute(sql)
     rows = curs.fetchall()
