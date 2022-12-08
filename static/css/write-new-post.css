@@ -1,0 +1,32 @@
+/* write new post */
+#writeNewPost {
+  padding: var(--basic-padding-margin);
+  margin: 1rem 0 2rem;
+}
+
+#writeNewPost > a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.3rem;
+  background-color: var(--article-bg-color);
+  border: var(--article-border);
+  border-radius: 2rem;
+  transition: var(--hover-transition);
+  color: var(--sub-font-color);
+}
+
+#writeNewPost > a > div {
+  margin-left: 1rem;
+}
+
+#writeNewPost > a:hover {
+  box-shadow: var(--hover-box-shadow-article);
+  transform: var(--hover-transform);
+}
+
+#writeNewPost i {
+  padding: 0.3rem;
+  border: 2px solid var(--sub-font-color);
+  border-radius: 50%;
+}

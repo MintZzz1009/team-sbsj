@@ -1,0 +1,272 @@
+
+.read-modal {
+    z-index: 999;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.read-hidden {
+    display: none;
+}
+
+.read-modal-overlay {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    position: absolute;
+}
+
+.read-modal-content {
+    position: fixed;
+    background-color: #fefaf0;
+    padding: 30px 50px;
+    text-align: center;
+    position: relative;
+    width: 80%;
+    height: 90%;
+    top: 0px;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    overflow-y: scroll;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+.read-modal-content::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+}
+
+.hidden {
+    display: none;
+}
+
+.read-modal-posting-title {
+    border-radius: 10px;
+    background-color: white;
+    border: #f3c530 solid 1px;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 70px auto 70px;
+}
+
+.read-modal-posting-title > a {
+    font-size: xx-large;
+}
+
+.read-modal-user-img {
+    margin: 10px;
+    width: 70px;
+    height: 70px;
+    border-radius: 100%;
+    overflow: hidden;
+}
+
+.read-modal-user-img-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.read-modal-sbsj-img > button {
+    border: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+    background-color: white;
+    background-size: cover;
+    object-fit: cover;
+}
+
+.read-modal-posting-contents {
+    border: #f3c530 solid 1px;
+    border-radius: 10px;
+    background-color: white;
+    display: flex;
+    text-align: left;
+    padding: 20px;
+    margin-top: 20px;
+    height: 80%;
+}
+
+.read-modal-posting-text {
+    display: block;
+    padding: 10px;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+}
+
+.read-modal-comment-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-comment-container {
+    width: 100%;
+    height: 700px;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-comment-title {
+    width: 100%;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-top: 2%;
+    margin-bottom: 3%;
+}
+
+.modal-comment-body {
+    background-color: floralwhite;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    width: 90%;
+    height: 400px;
+    margin-bottom: 5%;
+    margin-left: 5%;
+    border-radius: 10px;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+.modal-comment-body::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+}
+
+.modal-comment {
+    background-color: rgb(251, 242, 223);
+    margin: 4%;
+    padding: 3%;
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 10px;
+}
+
+.comment-name {
+    font-weight: bold;
+}
+
+.comment-body {
+    width: 500px;
+}
+
+.comment-button {
+    display: flex;
+    justify-content: space-between;
+    width: 110px;
+    height: 30px;
+    text-align: center;
+}
+
+.comment {
+    font-weight: bold;
+}
+
+.modal-comment-bottom {
+    width: 90%;
+    height: 20%;
+    margin-left: 5%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.modal-input-button {
+    margin-top: 10px;
+    margin-left: 3%;
+}
+
+.comment1 {
+    margin-top: 5%;
+}
+
+.comment-myname {
+    font-weight: bold;
+    font-size: 1.5rem;
+    margin-bottom: 3%;
+}
+
+
+.modal-input-text {
+    width: 80%;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.comment-input-contents {
+    margin-top: 2%;
+    width: 100%;
+    height: 70px;
+    font-size: 1rem;
+    color: gray;
+    border-color: #ffc107;
+    border-radius: 10px;
+}
+
+.modal-button {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.modal-dialog {
+    display: flex;
+    flex-direction: column;
+    max-width: none;
+    max-height: none;
+    width: 1000px;
+
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+}
+
+/*  댓글 스크롤바 */
+.modal-comment-body::-webkit-scrollbar {
+    width: 10px; /* 스크롤바의 너비 */
+}
+
+.modal-comment-body::-webkit-scrollbar-thumb {
+    height: 30%; /* 스크롤바의 길이 */
+    background: #ffc107; /* 스크롤바의 색상 */
+
+    border-radius: 10px;
+}
+
+.modal-comment-body::-webkit-scrollbar-track {
+    background: #f9e5a6; /*스크롤바 뒷 배경 색상*/
+}
+
+/* 시간 출력 */
+.clock-content {
+    width: 90%;
+    margin-left: 4%;
+    text-align: right;
+}
+
+.clock {
+    color: gray;
+    font-size: 20px;
+
+}
+
+.apm {
+    color: gray;
+    font-size: 20px;
+}
+
