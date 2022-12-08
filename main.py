@@ -7,9 +7,9 @@ app.secret_key = "My_Secret_Key"
 
 # db = pymysql.connect(host='121.166.127.220', user='haksoo', db='sparta_sbsj', password='12345678', charset='utf8')
 # db = pymysql.connect(host='localhost', user='root', db='sparta_sbsj', password='bobo1200', charset='utf8')
-hostname = 'localhost'
-username = 'root'
-userpw = 'bobo1200'
+hostname = '121.166.127.220'
+username = 'jungmin'
+userpw = '12345678'
 
 
 @app.route("/")
@@ -129,7 +129,7 @@ def get_AllNewsfeed():
             """
     curs.execute(sql)
     rows = curs.fetchall()
-    print(rows)
+    # print(rows)
     db.commit()
     db.close()
     return jsonify({'posting__box': rows})
@@ -143,49 +143,60 @@ def save_comment():
     curs = db.cursor()
     comment_receive = request.form['comment_give']
     clock_receive = request.form['clock_give']
-    print(type(clock_receive))
-    clock_receive = str(clock_receive)
-    print(3)
+    posting_receive = request.form['posting_id_give']
+    # print(type(clock_receive))
+    # clock_receive = str(clock_receive)
+    # print(3)
     sql = """INSERT INTO comment
-            (comments, comment_created_at)
-            VALUES (%s, %s)
+            (comments, comment_created_at, posting_id)
+            VALUES (%s, %s, %s)
             """
-    print(4)
-    curs.execute(sql, (comment_receive, clock_receive))
+    curs.execute(sql, (comment_receive, clock_receive, posting_receive))
     db.commit()
     db.close()
-    print(5)
+
 
     return jsonify({"msg": "댓글작성 완료!"})
 
 
 # 댓글 조회
-@app.route('/show_comment', methods=['GET'])
+@app.route('/show_comment', methods=['POST'])
 def show_comment():
     db = pymysql.connect(host=hostname, user=username, db='sparta_sbsj', password=userpw, charset='utf8')
-
     curs = db.cursor()
 
-    sql = """SELECT comment_id, comments, comment_created_at FROM comment"""
+    pid_receive = int(request.form['pid_give'])
+    print(f'{pid_receive} pid 잘 받았습니다.')
+    # sql = """SELECT comment_id, comments, comment_created_at, posting_id FROM comment"""
+    sql = """SELECT * FROM comment"""
 
+    print(type(pid_receive))
     curs.execute(sql)
     rows = curs.fetchall()
 
+    print(rows)
     user_list = []
-
-    for list in rows:
-        temp = {
-            'comment_id': list[0],
-            'comment': list[1],
-            'clock': list[2]
-        }
-        user_list.append(temp)
+    
+    for list in rows:  
+        if pid_receive == list[4]:
+            temp = {
+                'comment_id': list[0],
+                'comment': list[2],
+                'clock': list[3],
+                'post_id': list[4]
+            }
+            print(f'{temp} temp 확인')
+            user_list.append(temp)
+            
+            
+    print(f'{user_list} user_list입니다')
     return jsonify({'msg': user_list})
 
 
 # 댓글 수정
 @app.route('/update/comment', methods=['POST'])
 def update_comment():
+
     db = pymysql.connect(host=hostname, user=username, db='sparta_sbsj', password=userpw, charset='utf8')
 
     curs = db.cursor()
