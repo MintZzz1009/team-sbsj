@@ -1,9 +1,13 @@
 $(document).ready(function () {
     show_all_posting();
+
 });
+
+
 
 // 뉴스피드 조회
 function show_all_posting() {
+    console.log($('#uniq_id').text())
     console.log('show_all_posting 작동 시작')
     $.ajax({
         type: "GET",
@@ -78,7 +82,7 @@ function show_all_posting() {
                             </div>
                         </a>
                     </div>
-                    <button id="${this.posting_id}" onclick="OpenPostBox(${this.post_num}, ${this.posting_id}, '${this.user_id}','${this.user_email}','${this.posting_title}','${this.user_desc}','${this.topic_num_0}','${this.topic_num_1}','${this.topic_num_2}')" class="newsfeed__previewCard">
+                    <button id="${this.posting_id}" onclick="OpenPostBox(${this.user_unique_id}, ${this.posting_id}, '${this.user_id}','${this.user_email}','${this.posting_title}','${this.user_desc}','${this.topic_num_0}','${this.topic_num_1}','${this.topic_num_2}')" class="newsfeed__previewCard">
                         <div class="previewCard__image"></div>
                         <div class="previewCard__contents">
                             <div class="previewCard__header">${this.posting_title}</div>
@@ -235,12 +239,11 @@ function new_posting() {
     let title = $("#posting_title").val();
     let text = $("#posting_text").val();
     let topic = topic_value_get();
-    let user = 5;
+
     $.ajax({
         type: "POST",
         url: "/mypage/newsfeed",
         data: {
-            user_id_give: user,
             posting_title_give: title,
             posting_text_give: text,
             posting_topic_give: topic,

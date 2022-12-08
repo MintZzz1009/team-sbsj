@@ -104,12 +104,14 @@ def log_in():
                 print(session)
                 print(len(session))
 
+
                 break
             else:
                 result_msg = 'wrong_pw'
                 break
     else:
         result_msg = 'fail'
+
 
     db.commit()
     db.close()
@@ -215,7 +217,7 @@ def post_NewNewsfeed():
     curs = db.cursor()
 
     posting = request.form
-    posting_user_id_give = int(posting['user_id_give'])
+    posting_user_id_give = session['uniq_id']
     posting_title_give = posting['posting_title_give']
     posting_text_give = posting['posting_text_give']
     posting_topic_give = posting['posting_topic_give']
