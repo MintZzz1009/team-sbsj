@@ -120,6 +120,44 @@ function OpenPostBox(user_unique_id,
     let pt = posting_text
     let ud = user_desc
     let pid = posting_id
+    $.ajax({
+        type: "GET",
+        url: "/show_comment",
+        data: {},
+        success: function (response) {
+            let rows = response["msg"]
+            console.log(rows)
+            for ( let i = 0; i < rows.length; i++) {
+                let comment_id = rows[i]['comment_id']
+                let comment = rows[i]['comment']
+                let clock = rows[i]['clock']
+
+                let temp_html = `
+                                <div class="comment-contain">
+                                    <div class="comment-name">
+                                        이름
+                                    </div>
+                                    <div class="comment_comment">
+                                        <div class="body-comment">
+                                        
+                                            <span id=span_${comment_id}>${comment}</span>
+                                        
+                                        </div>
+                                    </div>
+                                    <div class="comment-button">
+                                        <button onclick="addInput(${comment_id})" type="button" class="btn btn-warning button1">수정</button>
+                                    </div>
+                                </div>
+                                <div class="clock">
+                                        ${clock}
+                                </div>
+                                    `
+                $(".modal-comment-body").append(temp_html)
+            }
+            
+        }
+    })
+
     let temp_html = `<div class="read-modal read-hidden">
                                 <div class="read-modal-overlay" onclick="OffModal()"></div>
                                 <div class="read-modal-content">
@@ -235,26 +273,35 @@ function save_comment() {
 
 // 댓글 수정
 function addInput(comment_id) {
-    let edit_comment_id = comment_id
+    console.log(comment_id)
     let a = $(`#span_${comment_id}`)
-    let addinput = $(`#span_${comment_id} `).text()
-
+    let addinput = $(`#span_${comment_id}`).text()
+    console.log(a)
+    console.log(addinput)
     a.empty()
-    a.append($("<input>", {type: "text", value: addinput}))
+    a.append($("<input>", {id:"abcd", type: "text", value: addinput}))
     a.append($(`<button id="edit-${comment_id}" >수정완료!</button>`))
-    $(`#edit-${comment_id} `).click(function () {
-        update_comment(comment_id, edit_comment_id)
+
+    $(`#edit-${comment_id}`).click(function () {
+        update_comment(comment_id)
+        
+        console.log('수정완료! 버튼 실행 완료')
     })
 }
 
 // 댓글 수정 완료
-function update_comment(comment_id, edit_comment_id) {
-    edit_done = $(`#${comment_id} input`).val()
-    edit_comment_id = edit_comment_id
+function update_comment(comment_id) {
+    console.log(comment_id)
+
+    let edit_comment_id = $(`#span_${comment_id} input`).val()
+
+        console.log(edit_comment_id)
+        console.log($(`#span_${comment_id} input`))
+
     $.ajax({
         type: "POST",
         url: "/update/comment",
-        data: {edit_done_give: edit_done, edit_comment_id_give: edit_comment_id},
+        data: {edit_done_give: comment_id, edit_comment_id_give: edit_comment_id},
         success: function (response) {
             alert(response["msg"])
             $(".modal-comment-body").empty()

@@ -137,12 +137,12 @@
     margin-bottom: 5%;
     margin-left: 5%;
     border-radius: 10px;
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; 
+    scrollbar-width: none;
 }
 
 .modal-comment-body::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Opera*/
+    display: none; 
 }
 
 .modal-comment {
@@ -269,4 +269,3 @@
     color: gray;
     font-size: 20px;
 }
-
