@@ -166,15 +166,11 @@ def show_comment():
     curs = db.cursor()
 
     pid_receive = int(request.form['pid_give'])
-    print(f'{pid_receive} pid 잘 받았습니다.')
-    # sql = """SELECT comment_id, comments, comment_created_at, posting_id FROM comment"""
     sql = """SELECT * FROM comment"""
 
-    print(type(pid_receive))
     curs.execute(sql)
     rows = curs.fetchall()
 
-    print(rows)
     user_list = []
     
     for list in rows:  
@@ -185,20 +181,16 @@ def show_comment():
                 'clock': list[3],
                 'post_id': list[4]
             }
-            print(f'{temp} temp 확인')
+
             user_list.append(temp)
             
-            
-    print(f'{user_list} user_list입니다')
     return jsonify({'msg': user_list})
 
 
 # 댓글 수정
 @app.route('/update/comment', methods=['POST'])
 def update_comment():
-
     db = pymysql.connect(host=hostname, user=username, db='sparta_sbsj', password=userpw, charset='utf8')
-
     curs = db.cursor()
 
     edit_done_receive = request.form['edit_done_give']
@@ -211,6 +203,21 @@ def update_comment():
     db.close()
     return jsonify({'msg': '수정 완료!'})
 
+# 댓글 삭제
+@app.route('/delete/comment', methods=['POST'])
+def delete_comment():
+    db = pymysql.connect(host=hostname, user=username, db='sparta_sbsj', password=userpw, charset='utf8')
+    curs = db.cursor()
+    
+    delete_receive = request.form['delete_give']
+
+    sql = """DELETE FROM comment WHERE comment_id = %s"""
+    curs.execute(sql, (delete_receive))
+    
+    db.commit()
+    db.close()
+    
+    return jsonify({'msg': '삭제 완료!'})
 
 # 게시글 작성하기
 @app.route('/mypage/newsfeed', methods=['POST'])
@@ -233,6 +240,7 @@ def post_NewNewsfeed():
 
     db.commit()
     db.close()
+    
     return jsonify({'msg': '등록 완료'})
 
 

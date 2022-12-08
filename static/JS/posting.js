@@ -122,16 +122,14 @@ function OpenPostBox(
     data: { pid_give: pid },
     success: function (response) {
       let rows = response["msg"];
-      console.log(`${response["msg"]} 포스팅 아이디를 받아왔습니다`);
+ 
 
       for (let i = 0; i < rows.length; i++) {
         let comment_id = rows[i]["comment_id"];
         let comment = rows[i]["comment"];
         let clock = rows[i]["clock"];
-
-        console.log(`${comment_id},${comment},${clock} 입니다.`);
         let posting_id = rows[i]["posting_id"];
-        console.log(`for 문 실행 확인`);
+
         let temp_html = `
                                 <div class="comment-contain">
                                     <div class="comment-name">
@@ -146,10 +144,11 @@ function OpenPostBox(
                                     </div>
                                     <div class="comment-button">
                                         <button onclick="addInput(${comment_id})" type="button" class="btn btn-warning button1">수정</button>
+                                        <button onclick="delete_comment(${comment_id})" type="button" class="btn btn-warning button1">삭제</button>
                                     </div>
                                 </div>
                                 <div class="clock">
-                                        ${clock}
+                                    ${time_stemp(`${clock}`)}
                                 </div>
                                     `;
         $(".modal-comment-body").append(temp_html);
@@ -308,6 +307,20 @@ function update_comment(comment_id) {
       window.location.reload()
     },
   });
+}
+
+// 댓글 삭제
+function delete_comment(comment_id) {
+  console.log(comment_id)
+  $.ajax({
+    type: "POST",
+    url: "/delete/comment",
+    data: {delete_give: comment_id},
+    success: function (response) {
+      alert(response["msg"])
+      window.location.reload()
+    }
+  })
 }
 
 // 몇분 전 시간 표시
