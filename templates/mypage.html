@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+            crossorigin="anonymous"
+    />
+    <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"
+    ></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script
+            src="https://kit.fontawesome.com/ec13307674.js"
+            crossorigin="anonymous"
+    ></script>
+    <script src="/static/myPageUserNameValidation.js"></script>
+    <script>
+        <!-- 마이페이지의 사진, id, email, 한줄소개 보여주기-->
+        $(document).ready(function () {
+            eachCards__listing()
+        });
+
+        function eachCards__listing() {
+            $.ajax({
+                type: 'GET',
+                url: '/mypage/mypage_reload',
+                data: {},
+                success: function (response) {
+                    let rows = response['eachCards__list']
+                    console.log(rows)
+                    for (let i = 0; i < rows.length; i++) {
+                        let eachCards_num = i
+                        let userUniqueId = rows[i][0]
+                        let photo = rows[i][1]
+                        let user_name = rows[i][2]
+                        let user_id = rows[i][3]
+                        let user_email = rows[i][4]
+                        let created_id = rows[i][5]
+                        let desc = rows[i][6]
+                        let mbti = rows[i][7]
+                        let killingtime = rows[i][8]
+                        let user_birth = rows[i][9]
+                        let interest = rows[i][10]
+
+                        let showeachCardsbox = new ShowEachCardsBox(userUniqueId, eachCards_num, photo, user_id, user_email, desc, created_id, user_birth, interest, killingtime, mbti, user_name)
+                        showeachCardsbox.Showeachcardsmethod()
+                    }
+                }
+            })
+
+            class ShowEachCardsBox {
+                constructor(userUniqueId, eachCards_num, photo, user_id, user_email, desc, created_id, user_birth, interest, killingtime, mbti, user_name) {
+                    this.eachCards_num = eachCards_num
+                    this.photo = photo
+                    this.user_id = user_id
+                    this.user_email = user_email
+                    this.desc = desc
+                    this.created_id = created_id
+                    this.user_birth = user_birth
+                    this.interest = interest
+                    this.killingtime = killingtime
+                    this.mbti = mbti
+                    this.user_name = user_name
+                }
+
+                Showeachcardsmethod() {
+                    let temp_html = `<div id="membersCards">
+                                            <div id="membersCards__list">
+                                                <a href="#" class="membersCards__list__eachCards">
+                                                    <div class="eachCards__inner-content-wrapper">
+                                                        <div class="eachCards__avatar">
+                                                            <span id="avatar__photo"><img src="${this.photo}"></span>
+                                                        </div>
+                                                        <div class="eachCards__info">
+                                                            <div class="eachCards__info__id">${this.user_id}</div>
+                                                            <div class="eachCards__info__email">${this.user_email}</div>
+                                                            <div class="eachCards__info__about">${this.desc}</div>
+                                                        </div>
+                                                        <div class="eachCards__info__edit">
+                                                            <button
+                                                                    onclick="editmodal__addcontents()"
+                                                                    type="button"
+                                                                    class="eachCards__info__button btn btn-link"
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target="#eachCards__info__editmodal"
+                                                            ><i class="fa-solid fa-pencil"></i>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="eachCards__info__maker">
+                                            <div class="eachCards_info_maker__space">
+                                                <div class="eachCards__info__maker__created">📌계약 날짜</div>
+                                            </div>
+                                            <div id="maker_created" class="eachCards__info__maker__created__contents">${this.created_id}</div>
+                                            <div class="eachCards_info_maker__space">
+                                                <div class="eachCards__info__maker__birth">👼 태어난 날</div>
+                                                <span id="birth_new_edit"><button onclick="birth_addinput()" id='birth_button' class="eachCards__info__maker__edit btn-link">편집</button></span>
+                                            </div>
+                                            <div id="maker_birth" class="eachCards__info__maker__birth__contents">${this.user_birth}</div>
+                                            <div class="eachCards_info_maker__space">
+                                                <div class="eachCards__info__maker__interest">💡 관심있는거?</div>
+                                                <span id="interest_new_edit"><button onclick="interest_addinput()" id='interest_button' class="eachCards__info__maker__edit btn-link">편집</button></span>
+                                            </div>
+                                            <div id="maker_interest" class="eachCards__info__maker__interest__contents">${this.interest}</div>
+                                            <div class="eachCards_info_maker__space">
+                                                <div class="eachCards__info__maker__killingtime">⭐ 시간 남을때?</div>
+                                                <span id="killingtime_new_edit"><button onclick="killingtime_addinput()" id='killingtime_button' class="eachCards__info__maker__edit btn-link">편집</button></span>
+                                            </div>
+                                            <div id="maker_killingtime" class="eachCards__info__maker__killingtime__contents">${this.killingtime}</div>
+                                            <div class="eachCards_info_maker__space">
+                                                <div class="eachCards__info__maker__mbti">🐶 제 성격은요!</div>
+                                                <span id="mbti_new_edit"><button onclick="mbti_addinput()" id='mbti_button' class="eachCards__info__maker__edit btn-link">편집</button></span>
+                                            </div>
+                                            <div id="maker_mbti" class="eachCards__info__maker__mbti__contents">${this.mbti}</div>
+                                        </div>`
+                    // 나의 뉴스피드 최신순으로 불러오는 것도 추가해야함
+                    $('#contents_list').empty()
+                    $('#contents_list').append(temp_html)
+                }
+            }}
+
+        function editmodal__addcontents() {
+                $.ajax({
+                    type: 'GET',
+                    url: '/mypage/mypage_modal_reload',
+                    data: {},
+                    success: function (response) {
+                        let rows = response['eachCards__info__contents']
+                        console.log(rows)
+                        for (let i = 0; i < rows.length; i++) {
+                            let eachCards_num = i
+                            let userUniqueId = rows[i][0]
+                            let photo = rows[i][1]
+                            let user_name = rows[i][2]
+                            let user_id = rows[i][3]
+                            let user_email = rows[i][4]
+                            let created_id = rows[i][5]
+                            let desc = rows[i][6]
+                            let mbti = rows[i][7]
+                            let killingtime = rows[i][8]
+                            let user_birth = rows[i][9]
+                            let interest = rows[i][10]
+
+                            let showeachCardsbox = new ShowEachCardsBox(userUniqueId, eachCards_num, photo, user_id, user_email, desc, created_id, user_birth, interest, killingtime, mbti, user_name)
+                            showeachCardsbox.Showeachcardsmethod()
+                        }
+                    }
+                })
+
+            class ShowEachCardsBox {
+                constructor(userUniqueId, eachCards_num, photo, user_id, user_email, desc, created_id, user_birth, interest, killingtime, mbti, user_name) {
+                    this.eachCards_num = eachCards_num
+                    this.photo = photo
+                    this.user_id = user_id
+                    this.user_email = user_email
+                    this.desc = desc
+                    this.created_id = created_id
+                    this.user_birth = user_birth
+                    this.interest = interest
+                    this.killingtime = killingtime
+                    this.mbti = mbti
+                    this.user_name = user_name
+                }
+
+                Showeachcardsmethod() {
+                    let temp_html = `<div class="modal-body">
+                                            <form class="row g-3">
+                                                <div class="profile__image">
+                                                    <div class="eachCards__avatar">
+                                                        <span id="modal__avatar__photo"><img id="myPageProfileImg" src="${this.photo}"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-mb-4">
+                                                    <div style="margin-bottom: 10px">프로필 파일 선택</div>
+                                                    <input type="file" id="myPageProfileImgFileInput" class="form-control" aria-label="file example" required>
+                                                </div>
+                                                <div class="white__space"><span id="showNoneFileError" style="font-size:0.8em; color: red;"></span></div>
+                                                <div class="col-mb-4">
+                                                    <label htmlFor="inputname" class="col-sm-2 col-form-label">이름<span
+                                                        class="essential">*</span></label><span id="nameValidationMsg" style="font-size: 0.8em; color:red;"></span>
+                                                    <div class="col-sm-12">
+                                                        <input type="text" class="form-control" id="inputname" value=${this.user_name} required>
+                                                    </div>
+                                                </div>
+                                                <div class="form__id__email">
+                                                    <div class="col-mb-4">
+                                                        <label htmlFor="staticId" class="col-sm-4 col-form-label">아이디</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" readOnly class="form-control-plaintext" id="staticId"
+                                                                   value=${this.user_id}>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-mb-4">
+                                                        <label htmlFor="staticEmail" class="col-sm-4 col-form-label">이메일</label>
+                                                        <div class="col-sm-12">
+                                                            <input type="text" readOnly class="form-control-plaintext" id="staticEmail"
+                                                                   value=${this.user_email}>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <label htmlFor="inputintroduce" class="form-label">한줄소개</label>
+                                                    <textarea class="form-control" id="inputintroduce" style="height: 100px">${this.desc}</textarea>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button onclick="eachCards__listing()"
+                                                    type="button"
+                                                    class="btn btn-secondary"
+                                                    data-bs-dismiss="modal"
+                                            >
+                                                닫기
+                                            </button>
+                                            <button onclick="saveUserInfoInMyPage()" type="button" class="btn btn-primary">
+                                                변경된 내용 저장하기
+                                            </button>
+                                        </div>`
+                                        $('#modal-content-page').empty()
+                            $('#modal-content-page').append(temp_html)
+                }
+            }
+        }
+
+
+
+            // function eachCards__info__edit() {
+            //
+            //     // let photo = $('#select_photo').val()
+            //     let desc = $('#inputintroduce').val()
+            //
+            //     console.log(desc)
+            //
+            //     $.ajax({
+            //         type: 'POST',
+            //         url: '/mypage/mypage_upload',
+            //         data: {desc_give: desc},
+            //         success: function (response) {
+            //             alert(response['msg'])
+            //             window.location.reload()
+            //         }
+            //     });
+            // }
+
+            function saveCharacters(category, content){
+
+            console.log(category);
+            console.log(content);
+
+            $.ajax({
+                    type: 'POST',
+                    url: '/saveCharacters',
+                    data: {
+                        categoryGive: category,
+                        contentGive: content},
+                    success: function (response){
+
+                    }
+                })
+
+                return
+            }
+
+
+            function birth_addinput() {
+                const writebirth = $('#maker_birth').text();
+                const savebirth = "<button onclick='birth_deleteinput()' id='save_birth' class='eachCards__info__maker__edit btn-link'>저장하기</button>";
+                $('#maker_birth, #birth_new_edit').empty();
+                $('#maker_birth').append($("<input/>", {id: "maker_contents", type: "text", value: writebirth}))
+                $('#birth_new_edit').append(savebirth);
+
+            }
+
+            function birth_deleteinput() {
+                let inputbirth = $('#maker_contents').val();
+                const editbirth = "<button onclick='birth_addinput()' id='birth_button' class='eachCards__info__maker__edit btn-link'>편집</button>";
+                $('#maker_birth, #birth_new_edit').empty();
+                $('#maker_birth').append(inputbirth)
+                $("#birth_new_edit").append(editbirth);
+                saveCharacters('user_birth', inputbirth);
+
+
+            }
+
+            function interest_addinput() {
+                const writeinterest = $('#maker_interest').text();
+                const saveinterest = "<button onclick='interest_deleteinput()' id='save_interest' class='eachCards__info__maker__edit btn-link'>저장하기</button>";
+                $('#maker_interest, #interest_new_edit').empty();
+                $('#maker_interest').append($("<input/>", {id: "maker_contents", type: "text", value: writeinterest}))
+                $('#interest_new_edit').append(saveinterest);
+            }
+
+            function interest_deleteinput() {
+                let inputinterest = $('#maker_contents').val();
+                const editinterest = "<button onclick='interest_addinput()' id='interest_button' class='eachCards__info__maker__edit btn-link'>편집</button>";
+                $('#maker_interest, #interest_new_edit').empty();
+                $('#maker_interest').append(inputinterest)
+                $("#interest_new_edit").append(editinterest);
+                saveCharacters('interest', inputinterest);
+            }
+
+            function killingtime_addinput() {
+                const writekillingtime = $('#maker_killingtime').text();
+                const savekillingtime = "<button onclick='killingtime_deleteinput()' id='save_killingtime' class='eachCards__info__maker__edit btn-link'>저장하기</button>";
+                $('#maker_killingtime, #killingtime_new_edit').empty();
+                $('#maker_killingtime').append($("<input/>", {
+                    id: "maker_contents",
+                    type: "text",
+                    value: writekillingtime
+                }))
+                $('#killingtime_new_edit').append(savekillingtime);
+            }
+
+            function killingtime_deleteinput() {
+                let inputkillingtime = $('#maker_contents').val();
+                const editkillingtime = "<button onclick='killingtime_addinput()' id='killingtime_button' class='eachCards__info__maker__edit btn-link'>편집</button>";
+                $('#maker_killingtime, #killingtime_new_edit').empty();
+                $('#maker_killingtime').append(inputkillingtime)
+                $("#killingtime_new_edit").append(editkillingtime);
+                saveCharacters('killingtime', inputkillingtime);
+            }
+
+            function mbti_addinput() {
+                const writembti = $('#maker_mbti').text();
+                const savembti = "<button onclick='mbti_deleteinput()' id='save_mbti' class='eachCards__info__maker__edit btn-link'>저장하기</button>";
+                $('#maker_mbti, #mbti_new_edit').empty();
+                $('#maker_mbti').append($("<input/>", {id: "maker_contents", type: "text", value: writembti}))
+                $('#mbti_new_edit').append(savembti);
+            }
+
+            function mbti_deleteinput() {
+                let inputmbti = $('#maker_contents').val();
+                const editmbti = "<button onclick='mbti_addinput()' id='mbti_button' class='eachCards__info__maker__edit btn-link'>편집</button>";
+                $('#maker_mbti, #mbti_new_edit').empty();
+                $('#maker_mbti').append(inputmbti)
+                $("#mbti_new_edit").append(editmbti);
+                saveCharacters('mbti', inputmbti);
+
+            }
+
+    </script>
+    <title>개인페이지</title>
+    <link rel="stylesheet" href="../static/styles.css"/>
+</head>
+<body>
+<header>
+    <div class="header__column">
+        <div id="sbsj-signature"></div>
+        <h1>상부삼조</h1>
+    </div>
+</header>
+<section id="mainSection">
+    <div id="topics">
+        <div id="topics__title">
+            <button class="btn" data-bs-toggle="collapse" data-bs-target="#topics__categories"
+                    aria-expanded="true" aria-controls="topics__categories"><i class="fa-solid fa-caret-right"></i> topics
+            </button>
+        </div>
+        <div class="collapse show" id="topics__categories">
+                <button class="topics__buttons">🌕 전체</button>
+                <button class="topics__buttons">📡 중개 플랫폼</button>
+                <button class="topics__buttons">📷 라이프스타일</button>
+                <button class="topics__buttons">💰 금융</button>
+                <button class="topics__buttons">👫 소셜</button>
+                <button class="topics__buttons">🎙 미디어</button>
+                <button class="topics__buttons">✏️ 교육</button>
+                <button class="topics__buttons">🚲 생산성</button>
+                <button class="topics__buttons">🔗 블록체인</button>
+                <button class="topics__buttons">💻 노코드</button>
+                <button class="topics__buttons">🤖 인공지능</button>
+                <button class="topics__buttons">🏘 커뮤니티</button>
+                <button class="topics__buttons">📊 분석툴</button>
+                <button class="topics__buttons">🎨 디자인</button>
+        </div>
+    </div>
+    <div id="contents">
+        <div id="contents_list">
+
+        </div>
+        <div id="newsfeed">
+            <div class="newsfeed__header">
+                <div class="newsfeed__header__column">
+
+                    <!-- <select name="class">
+                      <option value="all">전체</option>
+                      <option value="following">내팔로잉</option>
+                    </select> -->
+                </div>
+            </div>
+            <div class="newsfeed__main">
+                <div class="newsfeed__newsfeed">
+                    <!-- Button trigger modal -->
+                    <br>
+                    <div>게시물 로그</div>
+                    </br>
+                    <div>12.05
+                        <button
+                                type="button"
+                                class="newsfeed__previewCard btn btn-primary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#exampleModal"
+                        >
+                            <div class="previewCard__image"></div>
+                            <div class="previewCard__contents">
+                                <div class="previewCard__header">제목</div>
+                                <div class="previewCard__desc">
+                                    현실과 가상의 경계를 허물다, 가상인플루언서 제작 및 마케팅
+                                    스타트업
+                                </div>
+                                <div class="previewCard__topics">
+                                    <div class="previewCard__topics__tag">🔮 마케팅툴</div>
+                                    <div class="previewCard__topics__tag">🎙 미디어</div>
+                                    <div class="previewCard__topics__tag">👫 소셜</div>
+                                    <div class="previewCard__topics__tag">댓글수</div>
+                                    <div class="previewCard__topics__tag">조회수</div>
+                                </div>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal -->
+            <div
+                    class="modal fade"
+                    id="exampleModal"
+                    tabindex="-1"
+                    aria-labelledby="exampleModalLabel"
+                    aria-hidden="true"
+            >
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">
+                                Modal title
+                            </h1>
+                            <button
+                                    type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                            ></button>
+                        </div>
+                        <div class="modal-body">...</div>
+                        <div class="modal-footer">
+                            <button
+                                    type="button"
+                                    class="btn btn-secondary"
+                                    data-bs-dismiss="modal"
+                            >
+                                Close
+                            </button>
+                            <button type="button" class="btn btn-primary">
+                                Save changes
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal -->
+            <div
+                    class="modal fade"
+                    id="eachCards__info__editmodal"
+                    tabindex="-1"
+                    aria-labelledby="eachCards__info__editmodalLabel"
+                    aria-hidden="true"
+            >
+                <div class="modal-dialog">
+                    <div id="modal-content-page" class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="eachCards__info__editmodalLabel">
+                                프로필 수정
+                            </h1>
+                            <button
+                                    type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                            ></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+<footer>footer</footer>
+</body>
+</html>

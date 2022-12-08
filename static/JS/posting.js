@@ -120,6 +120,7 @@ function OpenPostBox(user_unique_id,
     let pt = posting_text
     let ud = user_desc
     let pid = posting_id
+
     $.ajax({
         type: "GET",
         url: "/show_comment",
@@ -273,6 +274,7 @@ function save_comment() {
 
 // 댓글 수정
 function addInput(comment_id) {
+
     console.log(comment_id)
     let a = $(`#span_${comment_id}`)
     let addinput = $(`#span_${comment_id}`).text()
@@ -286,10 +288,12 @@ function addInput(comment_id) {
         update_comment(comment_id)
         
         console.log('수정완료! 버튼 실행 완료')
+
     })
 }
 
 // 댓글 수정 완료
+
 function update_comment(comment_id) {
     console.log(comment_id)
 
@@ -302,6 +306,7 @@ function update_comment(comment_id) {
         type: "POST",
         url: "/update/comment",
         data: {edit_done_give: comment_id, edit_comment_id_give: edit_comment_id},
+
         success: function (response) {
             alert(response["msg"])
             $(".modal-comment-body").empty()

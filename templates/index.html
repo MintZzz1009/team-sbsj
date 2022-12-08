@@ -24,6 +24,7 @@
 
     <script src="https://code.jquery.com/jquery-3.6.1.js"
             integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="/static/topic.js"></script>
     <title>Document</title>
     <link rel="stylesheet" href="../static/css/styles.css"/>
     <script src="../static/JS/toggle.js"></script>
@@ -56,20 +57,20 @@
             <div>topics</div>
         </div>
         <div id="topics__categories">
-            <button class="topics__buttons">🌕 전체</button>
-            <button class="topics__buttons">📡 중개 플랫폼</button>
-            <button class="topics__buttons">📷 라이프스타일</button>
-            <button class="topics__buttons">💰 금융</button>
-            <button class="topics__buttons">👫 소셜</button>
-            <button class="topics__buttons">🎙 미디어</button>
-            <button class="topics__buttons">✏ 교육</button>
-            <button class="topics__buttons">🚲 생산성</button>
-            <button class="topics__buttons">🔗 블록체인</button>
-            <button class="topics__buttons">💻 노코드</button>
-            <button class="topics__buttons">🤖 인공지능</button>
-            <button class="topics__buttons">🏘 커뮤니티</button>
-            <button class="topics__buttons">📊 분석툴</button>
-            <button class="topics__buttons">🎨 디자인</button>
+          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopic(0)">🌕 전체</button>
+          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopic(1)">📡 중개 플랫폼</button>
+          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopic(2)">📷 라이프스타일</button>
+          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopic(3)">💰 금융</button>
+          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopic(4)">👫 소셜</button>
+          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopic(5)">🎙 미디어</button>
+          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopic(6)">✏️ 교육</button>
+          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopic(7)">🚲 생산성</button>
+          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopic(8)">🔗 블록체인</button>
+          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopic(9)">💻 노코드</button>
+          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopic(10)">🤖 인공지능</button>
+          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopic(11)">🏘 커뮤니티</button>
+          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopic(12)">📊 분석툴</button>
+          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopic(13)">🎨 디자인</button>
         </div>
     </div>
     <div id="contents">
