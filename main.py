@@ -11,9 +11,11 @@ app.secret_key = "My_Secret_Key"
 
 # db = pymysql.connect(host='121.166.127.220', user='haksoo', db='sparta_sbsj', password='12345678', charset='utf8')
 # db = pymysql.connect(host='localhost', user='root', db='sparta_sbsj', password='bobo1200', charset='utf8')
-hostname = 'localhost'
-username = 'root'
-userpw = 'bobo1200'
+hostname = '121.166.127.220'
+username = 'seunghun'
+userpw = '12345678'
+
+print(os.getcwd())
 
 @app.route("/")
 def home():
@@ -415,8 +417,8 @@ def upload():
     # db = pymysql.connect(dbAdress)
     curs = db.cursor()
     # file = request.files.getlist('files[0]')
-    # dir = "static/img/profileImg/"
-    dir = "C:\\project/"
+    dir = "static/img/profileImg/"
+    # dir = "C:\\project/"
     file = request.files['profileImg']
 
     # print("request" + request)
@@ -465,7 +467,7 @@ def upload():
 
     print(os.getcwd())
 
-    os.chdir('C:\\project/')
+    os.chdir(dir)
     print(os.getcwd())
     # os.chdir(dir)
 
@@ -475,7 +477,7 @@ def upload():
     # temp = os.path.basename(filename)
     # print(temp)
 
-    # os.chdir("../../../")
+    os.chdir("../../../")
     print(os.getcwd())
     dir = dir + filename
 
