@@ -20,6 +20,9 @@
 @import url(newsfeed.css);
 @import url(read-post-modal.css);
 
+/*댓글*/
+@import url(comment.css);
+
 
 a {
   text-decoration: none;
