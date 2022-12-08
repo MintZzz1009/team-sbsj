@@ -29,9 +29,9 @@
               rows[i]['posting_text'] += ".......";
               }
 
-              let tempHTML = ``;
+              let tempHtml = ``;
               for(let j=0; j < rows[i]['topics_array'].length; j++){
-                tempHTML += `<div class="previewCard__topics__tag">${topicList[rows[i]['topics_array'][j]]}</div>`
+                tempHtml += `<div class="previewCard__topics__tag">${topicList[rows[i]['topics_array'][j]]}</div>`
               }
 
               $('#newsfeed__expansion').append(`                
@@ -53,7 +53,7 @@
                             <div class="previewCard__header">${rows[i]['posting_title']}</div>
                             <div class="previewCard__desc">${rows[i]['posting_text']}</div>
                             <div class="previewCard__topics">
-                            ${tempHTML}
+                            ${tempHtml}
                             </div>
                         </div>
                     </button>
@@ -192,7 +192,7 @@
                                     <div class="previewCard__header">${rows[i]['posting_title']}</div>
                                     <div class="previewCard__desc">${rows[i]['posting_text']}</div>
                                     <div class="previewCard__topics">
-                                    ${tempHTML}
+                                    ${tempHtml}
                                     </div>
                                 </div>
                             </button>

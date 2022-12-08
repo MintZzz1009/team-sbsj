@@ -575,13 +575,14 @@ def showNewsfeedFilteredByTopic():
 
 @app.route('/showNewsfeedOnlyMine', methods=['POST'])
 def showNewsfeedOnlyMine():
+    print("실향")
     db = pymysql.connect(host=hostname, user=username, db='sparta_sbsj', password=userpw, charset='utf8')
     # db = pymysql.connect(dbAdress)
     curs = db.cursor()
 
     userIdReceive = request.form['userIdGive']
 
-    print(userIdReceive)
+    # print(userIdReceive)
     sql = '''
         select user_unique_id, user_name, user_email, user_profile_img_src from user
         where user_id = %s
@@ -600,7 +601,6 @@ def showNewsfeedOnlyMine():
     curs.execute(sql, userUniqueId)
     rows = curs.fetchall()
     result = []
-
     for i in range(len(rows)):
         dic = {
             'posting_id': rows[i][0],
