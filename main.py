@@ -1,4 +1,3 @@
-
 from flask import Flask, session, render_template, request, jsonify
 import pymysql
 
@@ -6,8 +5,6 @@ from werkzeug.utils import secure_filename
 import os
 
 from datetime import datetime
-
-
 
 app = Flask(__name__)
 app.secret_key = "My_Secret_Key"
@@ -17,7 +14,6 @@ app.secret_key = "My_Secret_Key"
 hostname = '121.166.127.220'
 username = 'seunghun'
 userpw = '12345678'
-
 
 @app.route("/")
 def home():
@@ -227,6 +223,31 @@ def post_NewNewsfeed():
     curs.execute(sql, (posting_user_id_give, posting_title_give, posting_text_give, posting_topic_give))
     rows = curs.fetchall()
 
+    postingTopicSplited = posting_topic_give.split(" ")
+
+    sql = '''
+        select posting_id from posting
+        where posting_title = %s and posting_text = %s
+    '''
+
+    curs.execute(sql, (posting_title_give, posting_text_give))
+    temp = curs.fetchall()
+    print(temp)
+    print(temp[0][0])
+
+    sql = '''
+        insert into topics_in_posting (posting_id, topic_num_0) value (%s, 1)
+    '''
+
+    curs.execute(sql, temp[0][0])
+
+    for i in range(len(postingTopicSplited)):
+        sql = '''
+                update topics_in_posting set topic_num_%s = 1
+                where posting_id = %s
+            '''
+        curs.execute(sql, (int(postingTopicSplited[i]), temp[0][0]))
+
     db.commit()
     db.close()
     return jsonify({'msg': '등록 완료'})
@@ -236,10 +257,11 @@ def post_NewNewsfeed():
 def mymage_main():
     return render_template('mypage.html')
 
+
 # 마이페이지 불러오기
 @app.route("/mypage/mypage_reload", methods=["GET"])
 def mypage_reload():
-    db = pymysql.connect(host='121.166.127.220', user='seunghun', db='sparta_sbsj', password='12345678', charset='utf8')
+    db = pymysql.connect(host=hostname, user=username, db='sparta_sbsj', password=userpw, charset='utf8')
     # db = pymysql.connect(dbAdress)
     curs = db.cursor()
 
@@ -249,8 +271,10 @@ def mypage_reload():
     where u.user_unique_id = %s 
     '''
 
-    curs.execute(sql, "2")
+    curs.execute(sql, session['uniq_id'])
     rows = curs.fetchall()  # curs.exe ~ 한거를 rows에 담음
+    print(rows)
+    print(session['uniq_id'])
 
     db.commit()
     db.close()
@@ -260,7 +284,7 @@ def mypage_reload():
 
 @app.route("/mypage/mypage_modal_reload", methods=["GET"])
 def mypage_modal_reload():
-    db = pymysql.connect(host='121.166.127.220', user='seunghun', db='sparta_sbsj', password='12345678', charset='utf8')
+    db = pymysql.connect(host=hostname, user=username, db='sparta_sbsj', password=userpw, charset='utf8')
     # db = pymysql.connect(dbAdress)
     curs = db.cursor()
 
@@ -270,7 +294,7 @@ def mypage_modal_reload():
         where u.user_unique_id = %s  
     '''
 
-    curs.execute(sql, "2")
+    curs.execute(sql, session['uniq_id'])
     rows = curs.fetchall()  # curs.exe ~ 한거를 rows에 담음
 
     db.commit()
@@ -281,16 +305,16 @@ def mypage_modal_reload():
 
 @app.route("/mypage/mypage_upload", methods=["POST"])
 def mypage_upload():
-    db = pymysql.connect(host='121.166.127.220', user='seunghun', db='sparta_sbsj', password='12345678', charset='utf8')
+    db = pymysql.connect(host=hostname, user=username, db='sparta_sbsj', password=userpw, charset='utf8')
     # db = pymysql.connect(dbAdress)
     curs = db.cursor()
 
     desc_receive = (request.form['desc_give'])
     # photo_receive = request.form['photo_give']
     print(desc_receive)
-    sql = '''update mypage_info set description = %s where user_unique_id = 2'''
+    sql = '''update mypage_info set description = %s where user_unique_id = %s'''
 
-    curs.execute(sql, desc_receive)
+    curs.execute(sql, (desc_receive, session['uniq_id']))
 
     rows = curs.fetchall()  # curs.exe ~ 한거를 rows에 담음
     print(rows)
@@ -300,10 +324,10 @@ def mypage_upload():
 
     return jsonify({'msg': '저장완료!'})
 
+
 @app.route('/saveCharacters', methods=['POST'])
 def saveCharacters():
-
-    db = pymysql.connect(host='121.166.127.220', user='seunghun', db='sparta_sbsj', password='12345678', charset='utf8')
+    db = pymysql.connect(host=hostname, user=username, db='sparta_sbsj', password=userpw, charset='utf8')
     curs = db.cursor()
 
     category = request.form['categoryGive']
@@ -315,25 +339,24 @@ def saveCharacters():
     temp = 'update mypage_info set ' + category + ' = %s where user_unique_id = %s'
     sql = temp
 
-    curs.execute(sql, (content, 2))
+    curs.execute(sql, (content, session['uniq_id']))
 
     db.commit()
     db.close()
 
-    return jsonify({'msg':'저장완료'})
-
+    return jsonify({'msg': '저장완료'})
 
 
 @app.route('/saveUserInfoInMyPage', methods=['POST'])
 def saveUserInfoInMyPage():
-    db = pymysql.connect(host='121.166.127.220', user='seunghun', db='sparta_sbsj', password='12345678', charset='utf8')
+    db = pymysql.connect(host=hostname, user=username, db='sparta_sbsj', password=userpw, charset='utf8')
     # db = pymysql.connect(dbAdress)
     curs = db.cursor()
 
     userName = request.form['userNameGive']
     userDesc = request.form['userDescGive']
     userProfileImgSrc = request.form['profileImgSrcGive']
-    userUniqueId = request.form['userUniqueIdGive']
+    userUniqueId = session['uniq_id']
 
     print(userName)
     print(userDesc)
@@ -359,13 +382,15 @@ def saveUserInfoInMyPage():
 
     return jsonify({"msg": "수정 완료!"})
 
+
 @app.route('/uploadProfileImg', methods=['POST'])
 def upload():
-    db = pymysql.connect(host='121.166.127.220', user='seunghun', db='sparta_sbsj', password='12345678', charset='utf8')
+    db = pymysql.connect(host=hostname, user=username, db='sparta_sbsj', password=userpw, charset='utf8')
     # db = pymysql.connect(dbAdress)
     curs = db.cursor()
     # file = request.files.getlist('files[0]')
-    dir = "static/img/profileImg/"
+    # dir = "static/img/profileImg/"
+    dir = "C:\\project/"
     file = request.files['profileImg']
 
     # print("request" + request)
@@ -389,7 +414,7 @@ def upload():
 
     now = datetime.now().strftime('%Y%m%d_%H%M%S')
 
-    filename = "_" + now + extension
+    filename = str(session['uniq_id']) + "_" + now + extension
 
     # file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
@@ -398,32 +423,41 @@ def upload():
         where user_unique_id = %s
     '''
 
-    curs.execute(sql, 2)
+    curs.execute(sql, session['uniq_id'])
     existingImgSrc = curs.fetchall()[0][0]
 
     print(existingImgSrc)
 
     if existingImgSrc is not None:
-        os.remove(existingImgSrc)
+        try:
+            os.remove(existingImgSrc)
+        except:
+            print("DB 경로 오류, 프로필이미지 삭제 미실행")
 
     # print(existingImgSrc)
     # print(existingImgSrc[0][0])
 
-    os.chdir(dir)
+    print(os.getcwd())
 
+    os.chdir('C:\\project/')
+    print(os.getcwd())
+    # os.chdir(dir)
+
+    print(os.getcwd())
     file.save(filename)
     # temp = os.path.dirname(file)
     # temp = os.path.basename(filename)
     # print(temp)
 
-    os.chdir("../../../")
+    # os.chdir("../../../")
+    print(os.getcwd())
     dir = dir + filename
 
     sql = '''
             update user set user_profile_img_src = %s
             where user_unique_id = %s
         '''
-    curs.execute(sql, (dir, 2))
+    curs.execute(sql, (dir, session['uniq_id']))
 
     db.commit()
     db.close()
@@ -437,7 +471,7 @@ def showNewsfeedFilteredByTopic():
     dic = {}
     result = []
 
-    db = pymysql.connect(host='121.166.127.220', user='seunghun', db='sparta_sbsj', password='12345678', charset='utf8')
+    db = pymysql.connect(host=hostname, user=username, db='sparta_sbsj', password=userpw, charset='utf8')
     # db = pymysql.connect(host='localhost', user='root', db='sparta_sbsj', password='f2143142', charset='utf8')
     # db = pymysql.connect(dbAdress)
     curs = db.cursor()
@@ -512,12 +546,13 @@ def showNewsfeedFilteredByTopic():
 
 @app.route('/showNewsfeedOnlyMine', methods=['POST'])
 def showNewsfeedOnlyMine():
-    db = pymysql.connect(host='121.166.127.220', user='seunghun', db='sparta_sbsj', password='12345678', charset='utf8')
+    db = pymysql.connect(host=hostname, user=username, db='sparta_sbsj', password=userpw, charset='utf8')
     # db = pymysql.connect(dbAdress)
     curs = db.cursor()
 
     userIdReceive = request.form['userIdGive']
 
+    print(userIdReceive)
     sql = '''
         select user_unique_id, user_name, user_email, user_profile_img_src from user
         where user_id = %s
@@ -526,7 +561,7 @@ def showNewsfeedOnlyMine():
     curs.execute(sql, userIdReceive)
     userInfo = curs.fetchall()
     userUniqueId = userInfo[0][0]
-
+    print(userUniqueId)
     sql = '''
         select posting_id, posting_title, posting_text, posting_topic from posting p 
         where user_unique_id = %s
@@ -553,6 +588,7 @@ def showNewsfeedOnlyMine():
     db.close()
 
     return jsonify({'result': result})
+
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=5000, debug=True)
