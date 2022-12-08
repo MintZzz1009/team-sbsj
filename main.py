@@ -508,6 +508,7 @@ def showNewsfeedFilteredByTopic():
     sql = '''
         select posting_id from topics_in_posting
         where topic_num_%s = 1
+        order by posting_id desc
     '''
 
     # curs.execute(sql)
@@ -556,7 +557,7 @@ def showNewsfeedFilteredByTopic():
                 'user_name': userInfo[0][0],
                 'user_email': userInfo[0][1],
                 'user_profile_img_src': userInfo[0][2],
-                # 'user_unique_id' : temp[j][0],
+                'user_unique_id' : temp[j][0],
                 'posting_title': temp[j][1],
                 'posting_text': temp[j][2],
                 'topics_array': topicsArray
@@ -593,6 +594,7 @@ def showNewsfeedOnlyMine():
     sql = '''
         select posting_id, posting_title, posting_text, posting_topic from posting p 
         where user_unique_id = %s
+        order by posting_id desc
     '''
 
     curs.execute(sql, userUniqueId)
