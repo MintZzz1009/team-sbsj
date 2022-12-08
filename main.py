@@ -14,9 +14,9 @@ app.secret_key = "My_Secret_Key"
 
 # db = pymysql.connect(host='121.166.127.220', user='haksoo', db='sparta_sbsj', password='12345678', charset='utf8')
 # db = pymysql.connect(host='localhost', user='root', db='sparta_sbsj', password='bobo1200', charset='utf8')
-hostname = '121.166.127.220'
-username = 'seunghun'
-userpw = '12345678'
+hostname = 'localhost'
+username = 'root'
+userpw = 'bobo1200'
 
 
 @app.route("/")
@@ -239,7 +239,7 @@ def mymage_main():
 # 마이페이지 불러오기
 @app.route("/mypage/mypage_reload", methods=["GET"])
 def mypage_reload():
-    db = pymysql.connect(host='121.166.127.220', user='seunghun', db='sparta_sbsj', password='12345678', charset='utf8')
+    db = pymysql.connect(host=hostname, user=username, db='sparta_sbsj', password=userpw, charset='utf8')
     # db = pymysql.connect(dbAdress)
     curs = db.cursor()
 
@@ -260,7 +260,7 @@ def mypage_reload():
 
 @app.route("/mypage/mypage_modal_reload", methods=["GET"])
 def mypage_modal_reload():
-    db = pymysql.connect(host='121.166.127.220', user='seunghun', db='sparta_sbsj', password='12345678', charset='utf8')
+    db = pymysql.connect(host=hostname, user=username, db='sparta_sbsj', password=userpw, charset='utf8')
     # db = pymysql.connect(dbAdress)
     curs = db.cursor()
 
@@ -281,7 +281,7 @@ def mypage_modal_reload():
 
 @app.route("/mypage/mypage_upload", methods=["POST"])
 def mypage_upload():
-    db = pymysql.connect(host='121.166.127.220', user='seunghun', db='sparta_sbsj', password='12345678', charset='utf8')
+    db = pymysql.connect(host=hostname, user=username, db='sparta_sbsj', password=userpw, charset='utf8')
     # db = pymysql.connect(dbAdress)
     curs = db.cursor()
 
@@ -303,7 +303,7 @@ def mypage_upload():
 @app.route('/saveCharacters', methods=['POST'])
 def saveCharacters():
 
-    db = pymysql.connect(host='121.166.127.220', user='seunghun', db='sparta_sbsj', password='12345678', charset='utf8')
+    db = pymysql.connect(host=hostname, user=username, db='sparta_sbsj', password=userpw, charset='utf8')
     curs = db.cursor()
 
     category = request.form['categoryGive']
@@ -326,7 +326,7 @@ def saveCharacters():
 
 @app.route('/saveUserInfoInMyPage', methods=['POST'])
 def saveUserInfoInMyPage():
-    db = pymysql.connect(host='121.166.127.220', user='seunghun', db='sparta_sbsj', password='12345678', charset='utf8')
+    db = pymysql.connect(host=hostname, user=username, db='sparta_sbsj', password=userpw, charset='utf8')
     # db = pymysql.connect(dbAdress)
     curs = db.cursor()
 
@@ -361,7 +361,7 @@ def saveUserInfoInMyPage():
 
 @app.route('/uploadProfileImg', methods=['POST'])
 def upload():
-    db = pymysql.connect(host='121.166.127.220', user='seunghun', db='sparta_sbsj', password='12345678', charset='utf8')
+    db = pymysql.connect(host=hostname, user=username, db='sparta_sbsj', password=userpw, charset='utf8')
     # db = pymysql.connect(dbAdress)
     curs = db.cursor()
     # file = request.files.getlist('files[0]')
@@ -437,7 +437,7 @@ def showNewsfeedFilteredByTopic():
     dic = {}
     result = []
 
-    db = pymysql.connect(host='121.166.127.220', user='seunghun', db='sparta_sbsj', password='12345678', charset='utf8')
+    db = pymysql.connect(host=hostname, user=username, db='sparta_sbsj', password=userpw, charset='utf8')
     # db = pymysql.connect(host='localhost', user='root', db='sparta_sbsj', password='f2143142', charset='utf8')
     # db = pymysql.connect(dbAdress)
     curs = db.cursor()
@@ -512,7 +512,7 @@ def showNewsfeedFilteredByTopic():
 
 @app.route('/showNewsfeedOnlyMine', methods=['POST'])
 def showNewsfeedOnlyMine():
-    db = pymysql.connect(host='121.166.127.220', user='seunghun', db='sparta_sbsj', password='12345678', charset='utf8')
+    db = pymysql.connect(host=hostname, user=username, db='sparta_sbsj', password=userpw, charset='utf8')
     # db = pymysql.connect(dbAdress)
     curs = db.cursor()
 
