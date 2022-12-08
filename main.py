@@ -14,9 +14,9 @@ app.secret_key = "My_Secret_Key"
 
 # db = pymysql.connect(host='121.166.127.220', user='haksoo', db='sparta_sbsj', password='12345678', charset='utf8')
 # db = pymysql.connect(host='localhost', user='root', db='sparta_sbsj', password='bobo1200', charset='utf8')
-hostname = '121.166.127.220'
-username = 'seunghun'
-userpw = '12345678'
+hostname = 'localhost'
+username = 'root'
+userpw = 'bobo1200'
 
 
 @app.route("/")
