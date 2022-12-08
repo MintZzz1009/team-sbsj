@@ -118,11 +118,11 @@ def get_AllNewsfeed():
     db = pymysql.connect(host='121.166.127.220', user='haksoo', db='sparta_sbsj', password='12345678', charset='utf8')
     curs = db.cursor()
     sql = """SELECT * FROM posting p 
-                INNER JOIN `user` u ON p.user_unique_id = u.user_unique_id
-                INNER JOIN topics_in_posting t ON p.posting_id  = t.posting_id
-                """
+            INNER JOIN `user` u ON p.user_unique_id = u.user_unique_id
+            """
     curs.execute(sql)
     rows = curs.fetchall()
+    print(rows)
     db.commit()
     db.close()
     return jsonify({'posting__box': rows})
