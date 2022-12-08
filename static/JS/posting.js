@@ -85,9 +85,7 @@ function show_all_posting() {
                         <div class="previewCard__image"></div>
                         <div class="previewCard__contents">
                             <div class="previewCard__header">${this.posting_title}</div>
-                            <div class="previewCard__desc">
-                                ${this.user_desc}
-                            </div>
+                            <div class="previewCard__desc">${this.user_desc}</div>
                             <div class="previewCard__topics">
                                 <div class="previewCard__topics__tag">${this.topic_num_0}</div>
                                 <div class="previewCard__topics__tag">${this.topic_num_1}</div>
@@ -104,8 +102,8 @@ function show_all_posting() {
 
 function OpenPostBox(user_unique_id,
                      posting_id,
-                     posting_text,
                      posting_title,
+                     posting_text,
                      user_id,
 ) {
     let p_text = posting_text
