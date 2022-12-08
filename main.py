@@ -217,10 +217,16 @@ def post_NewNewsfeed():
     curs = db.cursor()
 
     posting = request.form
+
+    if type(session['uniq_id']) is not str:
+        return jsonify({'msg': '로그인 후 작성 가능합니다.'})
+
     posting_user_id_give = session['uniq_id']
     posting_title_give = posting['posting_title_give']
     posting_text_give = posting['posting_text_give']
     posting_topic_give = posting['posting_topic_give']
+
+
 
     sql = """
     insert into posting (user_unique_id, posting_title, posting_text, posting_topic) values (%s,%s,%s,%s)

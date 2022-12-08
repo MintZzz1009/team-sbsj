@@ -4,7 +4,6 @@ $(document).ready(function () {
 });
 
 
-
 // 뉴스피드 조회
 function show_all_posting() {
     console.log($('#uniq_id').text())
@@ -28,7 +27,7 @@ function show_all_posting() {
 
                 let user_name = rows[i][11]
                 let user_email = rows[i][12]
-                let user_desc = rows[i][14]
+                let user_desc = rows[i][10]
                 let user_profile_img_src = rows[i][15]
                 let showpostbox =
                     new PostingBox(
@@ -82,7 +81,7 @@ function show_all_posting() {
                             </div>
                         </a>
                     </div>
-                    <button id="${this.posting_id}" onclick="OpenPostBox(${this.user_unique_id}, ${this.posting_id}, '${this.user_id}','${this.user_email}','${this.posting_title}','${this.user_desc}','${this.topic_num_0}','${this.topic_num_1}','${this.topic_num_2}')" class="newsfeed__previewCard">
+                    <button id="${this.posting_id}" onclick="OpenPostBox(${this.user_unique_id}, ${this.posting_id}, '${this.posting_title}', '${this.posting_text}')" class="newsfeed__previewCard">
                         <div class="previewCard__image"></div>
                         <div class="previewCard__contents">
                             <div class="previewCard__header">${this.posting_title}</div>
@@ -106,24 +105,13 @@ function show_all_posting() {
 function OpenPostBox(user_unique_id,
                      posting_id,
                      posting_text,
-                     posting_topic,
                      posting_title,
                      user_id,
-                     user_name,
-                     user_email,
-                     user_desc) {
-    console.log(user_unique_id,
-        posting_id,
-        posting_text,
-        posting_topic,
-        posting_title,
-        user_id,
-        user_name,
-        user_email,
-        user_desc)
-    let pt = posting_text
-    let ud = user_desc
+) {
+    let p_text = posting_text
     let pid = posting_id
+    let p_title = posting_title
+    let uid = user_id
 
     $.ajax({
         type: "GET",
@@ -170,7 +158,7 @@ function OpenPostBox(user_unique_id,
                                         <div class="read-modal-user-img">
                                             <img src="../static/image/sbsj_signature.PNG" class="read-modal-user-img-img">
                                         </div>
-                                        <div>${pt}</div>
+                                        <div>${p_title}</div>
                                         <div class="read-modal-sbsj-img">
                                             <button id="read-exit-posting" onclick="OffModal()"><img style="float: right;height: 70px; width:70px"
                                                                                 src="static/image/sbsj_signature.png"
@@ -179,7 +167,7 @@ function OpenPostBox(user_unique_id,
                                         </div>
                                     </div>
                                     <div class="read-modal-posting-contents">
-                                        ${ud}
+                                        ${p_text}
                                     </div>
                                     <div class="read-modal-comment-form">
                                         <div class="modal-comment-container">
