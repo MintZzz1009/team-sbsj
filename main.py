@@ -15,7 +15,6 @@ hostname = 'localhost'
 username = 'root'
 userpw = 'bobo1200'
 
-
 @app.route("/")
 def home():
     return render_template('index.html')
@@ -249,6 +248,31 @@ def post_NewNewsfeed():
     curs.execute(sql, (posting_user_id_give, posting_title_give, posting_text_give, posting_topic_give))
     rows = curs.fetchall()
 
+    postingTopicSplited = posting_topic_give.split(" ")
+
+    sql = '''
+        select posting_id from posting
+        where posting_title = %s and posting_text = %s
+    '''
+
+    curs.execute(sql, (posting_title_give, posting_text_give))
+    temp = curs.fetchall()
+    print(temp)
+    print(temp[0][0])
+
+    sql = '''
+        insert into topics_in_posting (posting_id, topic_num_0) value (%s, 1)
+    '''
+
+    curs.execute(sql, temp[0][0])
+
+    for i in range(len(postingTopicSplited)):
+        sql = '''
+                update topics_in_posting set topic_num_%s = 1
+                where posting_id = %s
+            '''
+        curs.execute(sql, (int(postingTopicSplited[i]), temp[0][0]))
+
     db.commit()
     db.close()
 
@@ -273,8 +297,10 @@ def mypage_reload():
     where u.user_unique_id = %s 
     '''
 
-    curs.execute(sql, "2")
+    curs.execute(sql, session['uniq_id'])
     rows = curs.fetchall()  # curs.exe ~ 한거를 rows에 담음
+    print(rows)
+    print(session['uniq_id'])
 
     db.commit()
     db.close()
@@ -294,7 +320,7 @@ def mypage_modal_reload():
         where u.user_unique_id = %s  
     '''
 
-    curs.execute(sql, "2")
+    curs.execute(sql, session['uniq_id'])
     rows = curs.fetchall()  # curs.exe ~ 한거를 rows에 담음
 
     db.commit()
@@ -312,9 +338,9 @@ def mypage_upload():
     desc_receive = (request.form['desc_give'])
     # photo_receive = request.form['photo_give']
     print(desc_receive)
-    sql = '''update mypage_info set description = %s where user_unique_id = 2'''
+    sql = '''update mypage_info set description = %s where user_unique_id = %s'''
 
-    curs.execute(sql, desc_receive)
+    curs.execute(sql, (desc_receive, session['uniq_id']))
 
     rows = curs.fetchall()  # curs.exe ~ 한거를 rows에 담음
     print(rows)
@@ -339,7 +365,7 @@ def saveCharacters():
     temp = 'update mypage_info set ' + category + ' = %s where user_unique_id = %s'
     sql = temp
 
-    curs.execute(sql, (content, 2))
+    curs.execute(sql, (content, session['uniq_id']))
 
     db.commit()
     db.close()
@@ -356,7 +382,7 @@ def saveUserInfoInMyPage():
     userName = request.form['userNameGive']
     userDesc = request.form['userDescGive']
     userProfileImgSrc = request.form['profileImgSrcGive']
-    userUniqueId = request.form['userUniqueIdGive']
+    userUniqueId = session['uniq_id']
 
     print(userName)
     print(userDesc)
@@ -389,7 +415,8 @@ def upload():
     # db = pymysql.connect(dbAdress)
     curs = db.cursor()
     # file = request.files.getlist('files[0]')
-    dir = "static/img/profileImg/"
+    # dir = "static/img/profileImg/"
+    dir = "C:\\project/"
     file = request.files['profileImg']
 
     # print("request" + request)
@@ -413,7 +440,7 @@ def upload():
 
     now = datetime.now().strftime('%Y%m%d_%H%M%S')
 
-    filename = "_" + now + extension
+    filename = str(session['uniq_id']) + "_" + now + extension
 
     # file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
@@ -422,32 +449,41 @@ def upload():
         where user_unique_id = %s
     '''
 
-    curs.execute(sql, 2)
+    curs.execute(sql, session['uniq_id'])
     existingImgSrc = curs.fetchall()[0][0]
 
     print(existingImgSrc)
 
     if existingImgSrc is not None:
-        os.remove(existingImgSrc)
+        try:
+            os.remove(existingImgSrc)
+        except:
+            print("DB 경로 오류, 프로필이미지 삭제 미실행")
 
     # print(existingImgSrc)
     # print(existingImgSrc[0][0])
 
-    os.chdir(dir)
+    print(os.getcwd())
 
+    os.chdir('C:\\project/')
+    print(os.getcwd())
+    # os.chdir(dir)
+
+    print(os.getcwd())
     file.save(filename)
     # temp = os.path.dirname(file)
     # temp = os.path.basename(filename)
     # print(temp)
 
-    os.chdir("../../../")
+    # os.chdir("../../../")
+    print(os.getcwd())
     dir = dir + filename
 
     sql = '''
             update user set user_profile_img_src = %s
             where user_unique_id = %s
         '''
-    curs.execute(sql, (dir, 2))
+    curs.execute(sql, (dir, session['uniq_id']))
 
     db.commit()
     db.close()
@@ -542,6 +578,7 @@ def showNewsfeedOnlyMine():
 
     userIdReceive = request.form['userIdGive']
 
+    print(userIdReceive)
     sql = '''
         select user_unique_id, user_name, user_email, user_profile_img_src from user
         where user_id = %s
@@ -550,7 +587,7 @@ def showNewsfeedOnlyMine():
     curs.execute(sql, userIdReceive)
     userInfo = curs.fetchall()
     userUniqueId = userInfo[0][0]
-
+    print(userUniqueId)
     sql = '''
         select posting_id, posting_title, posting_text, posting_topic from posting p 
         where user_unique_id = %s

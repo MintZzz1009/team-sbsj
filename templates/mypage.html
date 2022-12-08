@@ -21,10 +21,18 @@
             crossorigin="anonymous"
     ></script>
     <script src="/static/myPageUserNameValidation.js"></script>
+    <link rel="stylesheet" href="../static/css/styles.css"/>
+    <script src="../static/JS/toggle.js"></script>
+    <script src="../static/JS/posting.js"></script>
+    <script type="text/javascript" src="/static/topic.js"></script>
+
     <script>
         <!-- 마이페이지의 사진, id, email, 한줄소개 보여주기-->
         $(document).ready(function () {
             eachCards__listing()
+            showNewsfeedOnlyMine($('#userIdValue').text())
+            console.log("sfd" + $('#userIdValue').text())
+            console.log('dsf')
         });
 
         function eachCards__listing() {
@@ -357,30 +365,66 @@
     <div class="header__column">
         <div id="sbsj-signature"></div>
         <h1>상부삼조</h1>
+
+    </div>
+    <div class="header__column">
+        {% if session %}
+        {% include '/header/hello-user.html' %}
+        {% else %}
+        {% include '/header/login-button.html' %}
+        {% include '/header/signup-button.html' %}
+        {% endif %}
+        <div id="now-session" style="display: none">현재 세션은: {{ session }}</div>
+        <span id="userIdValue" style="display: none">{{ session['user_id'] }}</span>
+        <script>console.log($('#now-session').text())</script>
+
     </div>
 </header>
 <section id="mainSection">
+<!--    <div id="topics">-->
+<!--        <div id="topics__title">-->
+<!--            <button class="btn" data-bs-toggle="collapse" data-bs-target="#topics__categories"-->
+<!--                    aria-expanded="true" aria-controls="topics__categories"><i class="fa-solid fa-caret-right"></i> topics-->
+<!--            </button>-->
+<!--        </div>-->
+<!--        <div class="collapse show" id="topics__categories">-->
+<!--                <button class="topics__buttons">🌕 전체</button>-->
+<!--                <button class="topics__buttons">📡 중개 플랫폼</button>-->
+<!--                <button class="topics__buttons">📷 라이프스타일</button>-->
+<!--                <button class="topics__buttons">💰 금융</button>-->
+<!--                <button class="topics__buttons">👫 소셜</button>-->
+<!--                <button class="topics__buttons">🎙 미디어</button>-->
+<!--                <button class="topics__buttons">✏️ 교육</button>-->
+<!--                <button class="topics__buttons">🚲 생산성</button>-->
+<!--                <button class="topics__buttons">🔗 블록체인</button>-->
+<!--                <button class="topics__buttons">💻 노코드</button>-->
+<!--                <button class="topics__buttons">🤖 인공지능</button>-->
+<!--                <button class="topics__buttons">🏘 커뮤니티</button>-->
+<!--                <button class="topics__buttons">📊 분석툴</button>-->
+<!--                <button class="topics__buttons">🎨 디자인</button>-->
+<!--        </div>-->
+<!--    </div>-->
     <div id="topics">
+
         <div id="topics__title">
-            <button class="btn" data-bs-toggle="collapse" data-bs-target="#topics__categories"
-                    aria-expanded="true" aria-controls="topics__categories"><i class="fa-solid fa-caret-right"></i> topics
-            </button>
+            <div id="toggle-topics"><i class="fa-solid fa-sm fa-play"></i></div>
+            <div>topics</div>
         </div>
-        <div class="collapse show" id="topics__categories">
-                <button class="topics__buttons">🌕 전체</button>
-                <button class="topics__buttons">📡 중개 플랫폼</button>
-                <button class="topics__buttons">📷 라이프스타일</button>
-                <button class="topics__buttons">💰 금융</button>
-                <button class="topics__buttons">👫 소셜</button>
-                <button class="topics__buttons">🎙 미디어</button>
-                <button class="topics__buttons">✏️ 교육</button>
-                <button class="topics__buttons">🚲 생산성</button>
-                <button class="topics__buttons">🔗 블록체인</button>
-                <button class="topics__buttons">💻 노코드</button>
-                <button class="topics__buttons">🤖 인공지능</button>
-                <button class="topics__buttons">🏘 커뮤니티</button>
-                <button class="topics__buttons">📊 분석툴</button>
-                <button class="topics__buttons">🎨 디자인</button>
+        <div id="topics__categories">
+          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopic(0)">🌕 전체</button>
+          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopic(1)">📡 중개 플랫폼</button>
+          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopic(2)">📷 라이프스타일</button>
+          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopic(3)">💰 금융</button>
+          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopic(4)">👫 소셜</button>
+          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopic(5)">🎙 미디어</button>
+          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopic(6)">✏️ 교육</button>
+          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopic(7)">🚲 생산성</button>
+          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopic(8)">🔗 블록체인</button>
+          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopic(9)">💻 노코드</button>
+          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopic(10)">🤖 인공지능</button>
+          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopic(11)">🏘 커뮤니티</button>
+          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopic(12)">📊 분석툴</button>
+          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopic(13)">🎨 디자인</button>
         </div>
     </div>
     <div id="contents">
@@ -398,7 +442,7 @@
                 </div>
             </div>
             <div class="newsfeed__main">
-                <div class="newsfeed__newsfeed">
+                <div class="newsfeed__newsfeed" id="newsfeed__expansion">
                     <!-- Button trigger modal -->
                     <br>
                     <div>게시물 로그</div>
