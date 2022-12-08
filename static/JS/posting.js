@@ -12,9 +12,9 @@ function show_all_posting() {
         success: function (response) {
             console.log('show_all_posting 응답 성공')
             let rows = response['posting__box']
-            console.log(response['posting__box'])
-
-            for (let i = 0; i < rows.length; i++) {
+            console.log(rows)
+            console.log(rows.length)
+            for (let i = rows.length - 1; i >= 0; i--) {
                 let user_unique_id = rows[i][0]
                 let posting_id = rows[i][1]
                 let posting_text = rows[i][2]
@@ -128,7 +128,7 @@ function OpenPostBox(user_unique_id,
         success: function (response) {
             let rows = response["msg"]
             console.log(rows)
-            for ( let i = 0; i < rows.length; i++) {
+            for (let i = 0; i < rows.length; i++) {
                 let comment_id = rows[i]['comment_id']
                 let comment = rows[i]['comment']
                 let clock = rows[i]['clock']
@@ -155,7 +155,7 @@ function OpenPostBox(user_unique_id,
                                     `
                 $(".modal-comment-body").append(temp_html)
             }
-            
+
         }
     })
 
@@ -281,12 +281,12 @@ function addInput(comment_id) {
     console.log(a)
     console.log(addinput)
     a.empty()
-    a.append($("<input>", {id:"abcd", type: "text", value: addinput}))
+    a.append($("<input>", {id: "abcd", type: "text", value: addinput}))
     a.append($(`<button id="edit-${comment_id}" >수정완료!</button>`))
 
     $(`#edit-${comment_id}`).click(function () {
         update_comment(comment_id)
-        
+
         console.log('수정완료! 버튼 실행 완료')
 
     })
@@ -299,8 +299,8 @@ function update_comment(comment_id) {
 
     let edit_comment_id = $(`#span_${comment_id} input`).val()
 
-        console.log(edit_comment_id)
-        console.log($(`#span_${comment_id} input`))
+    console.log(edit_comment_id)
+    console.log($(`#span_${comment_id} input`))
 
     $.ajax({
         type: "POST",
