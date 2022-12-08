@@ -122,7 +122,7 @@ function OpenPostBox(
     data: { pid_give: pid },
     success: function (response) {
       let rows = response["msg"];
- 
+      console.log(rows)
 
       for (let i = 0; i < rows.length; i++) {
         let comment_id = rows[i]["comment_id"];
@@ -131,15 +131,13 @@ function OpenPostBox(
         let posting_id = rows[i]["posting_id"];
 
         let temp_html = `
-                                <div class="comment-contain">
+                                <div id="contain_${comment_id}" class="comment-contain">
                                     <div class="comment-name">
                                         이름
                                     </div>
                                     <div class="comment_comment">
                                         <div class="body-comment">
-                                        
                                             <span id=span_${comment_id}>${comment}</span>
-                                        
                                         </div>
                                     </div>
                                     <div class="comment-button">
@@ -265,7 +263,6 @@ function save_comment(poster_id) {
     },
     success: function (response) {
       alert(response["msg"]);
-      console.log("msg");
       window.location.reload();
     },
   });
@@ -273,31 +270,23 @@ function save_comment(poster_id) {
 
 // 댓글 수정
 function addInput(comment_id) {
-  console.log(comment_id);
-  let a = $(`#span_${comment_id}`);
+  let a = $(`#contain_${comment_id}`)
   let addinput = $(`#span_${comment_id}`).text();
-  console.log(a);
-  console.log(addinput);
-  a.empty();
-  a.append($("<input>", { id: "abcd", type: "text", value: addinput }));
-  a.append($(`<button id="edit-${comment_id}" >수정완료!</button>`));
+  let button_text = "수정"
 
+  a.empty();
+  a.append($("<input>", { id: "abcd", type: "text", value: addinput, style: "width: 90%; height: 70px; background-color: #fdf5df; border-radius: 30px; border-color: #f8e1a1; text-align: center; outline: none;"}));
+  a.append($("<img>", {class: "img-button", id: `edit-${comment_id}`, src: "/static/image/edit.png", style: "width: 6%; margin: auto; border: 0;"}));
   $(`#edit-${comment_id}`).click(function () {
     update_comment(comment_id);
 
-    console.log("수정완료! 버튼 실행 완료");
   });
 }
 
 // 댓글 수정 완료
 
 function update_comment(comment_id) {
-  console.log(comment_id);
-
-  let edit_comment_id = $(`#span_${comment_id} input`).val();
-
-  console.log(edit_comment_id);
-  console.log($(`#span_${comment_id} input`));
+  let edit_comment_id = $(`#contain_${comment_id} input`).val();
 
   $.ajax({
     type: "POST",
