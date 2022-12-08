@@ -145,10 +145,10 @@
     display: none; 
 }
 
-.modal-comment {
+.comment-contain {
     background-color: rgb(251, 242, 223);
     margin: 4%;
-    padding: 3%;
+    padding: 1%;
     width: 90%;
     display: flex;
     justify-content: space-between;
@@ -236,36 +236,13 @@
     flex-direction: column;
 }
 
-/*  댓글 스크롤바 */
-.modal-comment-body::-webkit-scrollbar {
-    width: 10px; /* 스크롤바의 너비 */
-}
-
-.modal-comment-body::-webkit-scrollbar-thumb {
-    height: 30%; /* 스크롤바의 길이 */
-    background: #ffc107; /* 스크롤바의 색상 */
-
-    border-radius: 10px;
-}
-
-.modal-comment-body::-webkit-scrollbar-track {
-    background: #f9e5a6; /*스크롤바 뒷 배경 색상*/
-}
-
 /* 시간 출력 */
-.clock-content {
-    width: 90%;
-    margin-left: 4%;
-    text-align: right;
-}
-
 .clock {
+    background-color: #fefaf0;
+    width: 90%;
+    margin-left: 7%;
+    text-align: right;
     color: gray;
     font-size: 20px;
-
 }
 
-.apm {
-    color: gray;
-    font-size: 20px;
-}

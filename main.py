@@ -15,9 +15,9 @@ app.secret_key = "My_Secret_Key"
 
 # db = pymysql.connect(host='121.166.127.220', user='haksoo', db='sparta_sbsj', password='12345678', charset='utf8')
 # db = pymysql.connect(host='localhost', user='root', db='sparta_sbsj', password='bobo1200', charset='utf8')
-hostname = 'localhost'
-username = 'root'
-userpw = 'bobo1200'
+hostname = '121.166.127.220'
+username = 'jungmin'
+userpw = '12345678'
 
 
 @app.route("/")
@@ -137,7 +137,7 @@ def get_AllNewsfeed():
             """
     curs.execute(sql)
     rows = curs.fetchall()
-    print(rows)
+    # print(rows)
     db.commit()
     db.close()
     return jsonify({'posting__box': rows})
@@ -151,43 +151,47 @@ def save_comment():
     curs = db.cursor()
     comment_receive = request.form['comment_give']
     clock_receive = request.form['clock_give']
-    print(type(clock_receive))
-    clock_receive = str(clock_receive)
-    print(3)
+    posting_receive = request.form['posting_id_give']
+    # print(type(clock_receive))
+    # clock_receive = str(clock_receive)
+    # print(3)
     sql = """INSERT INTO comment
-            (comments, comment_created_at)
-            VALUES (%s, %s)
+            (comments, comment_created_at, posting_id)
+            VALUES (%s, %s, %s)
             """
-    print(4)
-    curs.execute(sql, (comment_receive, clock_receive))
+    curs.execute(sql, (comment_receive, clock_receive, posting_receive))
     db.commit()
     db.close()
-    print(5)
+
 
     return jsonify({"msg": "댓글작성 완료!"})
 
 
 # 댓글 조회
-@app.route('/show_comment', methods=['GET'])
+@app.route('/show_comment', methods=['POST'])
 def show_comment():
     db = pymysql.connect(host=hostname, user=username, db='sparta_sbsj', password=userpw, charset='utf8')
-
     curs = db.cursor()
 
-    sql = """SELECT comment_id, comments, comment_created_at FROM comment"""
+    pid_receive = int(request.form['pid_give'])
+    sql = """SELECT * FROM comment"""
 
     curs.execute(sql)
     rows = curs.fetchall()
 
     user_list = []
+    
+    for list in rows:  
+        if pid_receive == list[4]:
+            temp = {
+                'comment_id': list[0],
+                'comment': list[2],
+                'clock': list[3],
+                'post_id': list[4]
+            }
 
-    for list in rows:
-        temp = {
-            'comment_id': list[0],
-            'comment': list[1],
-            'clock': list[2]
-        }
-        user_list.append(temp)
+            user_list.append(temp)
+            
     return jsonify({'msg': user_list})
 
 
@@ -195,7 +199,6 @@ def show_comment():
 @app.route('/update/comment', methods=['POST'])
 def update_comment():
     db = pymysql.connect(host=hostname, user=username, db='sparta_sbsj', password=userpw, charset='utf8')
-
     curs = db.cursor()
 
     edit_done_receive = request.form['edit_done_give']
@@ -208,6 +211,21 @@ def update_comment():
     db.close()
     return jsonify({'msg': '수정 완료!'})
 
+# 댓글 삭제
+@app.route('/delete/comment', methods=['POST'])
+def delete_comment():
+    db = pymysql.connect(host=hostname, user=username, db='sparta_sbsj', password=userpw, charset='utf8')
+    curs = db.cursor()
+    
+    delete_receive = request.form['delete_give']
+
+    sql = """DELETE FROM comment WHERE comment_id = %s"""
+    curs.execute(sql, (delete_receive))
+    
+    db.commit()
+    db.close()
+    
+    return jsonify({'msg': '삭제 완료!'})
 
 # 게시글 작성하기
 @app.route('/mypage/newsfeed', methods=['POST'])
@@ -230,6 +248,7 @@ def post_NewNewsfeed():
 
     db.commit()
     db.close()
+    
     return jsonify({'msg': '등록 완료'})
 
 
