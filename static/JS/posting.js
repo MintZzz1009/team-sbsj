@@ -117,16 +117,19 @@ function OpenPostBox(user_unique_id,
     success: function (response) {
       let rows = response["msg"];
 
+      console.log(`${rows}  user_name 확인`)
       for (let i = 0; i < rows.length; i++) {
         let comment_id = rows[i]["comment_id"];
         let comment = rows[i]["comment"];
         let clock = rows[i]["clock"];
         let posting_id = rows[i]["posting_id"];
+        let user_name = rows[i]["user_name"];
 
+        console.log(`${user_name} 유저네임 확인`)
         let temp_html = `
                                 <div id="contain_${comment_id}" class="comment-contain">
                                     <div class="comment-name">
-                                        이름
+                                        ${user_name}
                                     </div>
                                     <div class="comment_comment">
                                         <div class="body-comment">

@@ -11,9 +11,9 @@ app.secret_key = "My_Secret_Key"
 
 # db = pymysql.connect(host='121.166.127.220', user='haksoo', db='sparta_sbsj', password='12345678', charset='utf8')
 # db = pymysql.connect(host='localhost', user='root', db='sparta_sbsj', password='bobo1200', charset='utf8')
-hostname = 'localhost'
-username = 'root'
-userpw = 'bobo1200'
+hostname = '121.166.127.220'
+username = 'jungmin'
+userpw = '12345678'
 
 @app.route("/")
 def home():
@@ -142,19 +142,29 @@ def get_AllNewsfeed():
 @app.route('/save_comment', methods=['POST'])
 def save_comment():
     db = pymysql.connect(host=hostname, user=username, db='sparta_sbsj', password=userpw, charset='utf8')
-
     curs = db.cursor()
+    
+    try:
+        print(type(session['uniq_id']))
+    except:
+        return jsonify({'msg': '로그인 후 작성 가능합니다.'})
+    
+    print(session)
+    print(session['user_name'])
+    
+    user_name = session['user_name']
     comment_receive = request.form['comment_give']
     clock_receive = request.form['clock_give']
     posting_receive = request.form['posting_id_give']
+    
     # print(type(clock_receive))
     # clock_receive = str(clock_receive)
     # print(3)
     sql = """INSERT INTO comment
-            (comments, comment_created_at, posting_id)
-            VALUES (%s, %s, %s)
+            (comments, comment_created_at, posting_id, name)
+            VALUES (%s, %s, %s, %s)
             """
-    curs.execute(sql, (comment_receive, clock_receive, posting_receive))
+    curs.execute(sql, (comment_receive, clock_receive, posting_receive, user_name))
     db.commit()
     db.close()
 
@@ -170,6 +180,8 @@ def show_comment():
     pid_receive = int(request.form['pid_give'])
     sql = """SELECT * FROM comment ORDER BY comment_id DESC"""
 
+    
+
     curs.execute(sql)
     rows = curs.fetchall()
 
@@ -179,13 +191,15 @@ def show_comment():
         if pid_receive == list[4]:
             temp = {
                 'comment_id': list[0],
+                'user_name': list[1],
                 'comment': list[2],
                 'clock': list[3],
                 'post_id': list[4]
             }
 
             user_list.append(temp)
-
+            
+    print(user_list)
     return jsonify({'msg': user_list})
 
 
