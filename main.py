@@ -30,9 +30,13 @@ def mypage_reload():
     # db = pymysql.connect(dbAdress)
     curs = db.cursor()
 
-    sql = '''SELECT * FROM mypage_info where user_unique_id = 1'''
+    sql = '''
+        SELECT u.user_unique_id, u.user_profile_img_src, u.user_name, u.user_id, u.user_email, u.user_created_at, u.user_desc, mi.mbti, mi.killingtime, mi.user_birth, mi.interest FROM mypage_info mi
+    left join user u on mi.user_unique_id = u.user_unique_id
+    where u.user_unique_id = %s 
+    '''
 
-    curs.execute(sql)
+    curs.execute(sql, "2")
     rows = curs.fetchall()  # curs.exe ~ 한거를 rows에 담음
 
     db.commit()
@@ -47,9 +51,13 @@ def mypage_modal_reload():
     # db = pymysql.connect(dbAdress)
     curs = db.cursor()
 
-    sql = '''SELECT * FROM mypage_info where user_unique_id = 1'''
+    sql = '''
+        SELECT u.user_unique_id, u.user_profile_img_src, u.user_name, u.user_id, u.user_email, u.user_created_at, u.user_desc, mi.mbti, mi.killingtime, mi.user_birth, mi.interest FROM mypage_info mi
+        left join user u on mi.user_unique_id = u.user_unique_id
+        where u.user_unique_id = %s  
+    '''
 
-    curs.execute(sql)
+    curs.execute(sql, "2")
     rows = curs.fetchall()  # curs.exe ~ 한거를 rows에 담음
 
     db.commit()
@@ -78,6 +86,29 @@ def mypage_upload():
     db.close()
 
     return jsonify({'msg': '저장완료!'})
+
+@app.route('/saveCharacters', methods=['POST'])
+def saveCharacters():
+
+    db = pymysql.connect(host='121.166.127.220', user='seunghun', db='sparta_sbsj', password='12345678', charset='utf8')
+    curs = db.cursor()
+
+    category = request.form['categoryGive']
+    content = request.form['contentGive']
+
+    print(category)
+    print(content)
+
+    temp = 'update mypage_info set ' + category + ' = %s where user_unique_id = %s'
+    sql = temp
+
+    curs.execute(sql, (content, 2))
+
+    db.commit()
+    db.close()
+
+    return jsonify({'msg':'저장완료'})
+
 
 
 @app.route('/saveUserInfoInMyPage', methods=['POST'])

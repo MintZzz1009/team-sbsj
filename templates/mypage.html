@@ -37,24 +37,26 @@
                     console.log(rows)
                     for (let i = 0; i < rows.length; i++) {
                         let eachCards_num = i
-                        let photo = rows[i][2]
+                        let userUniqueId = rows[i][0]
+                        let photo = rows[i][1]
+                        let user_name = rows[i][2]
                         let user_id = rows[i][3]
                         let user_email = rows[i][4]
                         let created_id = rows[i][5]
                         let desc = rows[i][6]
-                        let killingtime = rows[i][7]
-                        let mbti = rows[i][8]
+                        let mbti = rows[i][7]
+                        let killingtime = rows[i][8]
                         let user_birth = rows[i][9]
                         let interest = rows[i][10]
-                        let user_name = rows[i][11]
-                        let showeachCardsbox = new ShowEachCardsBox(eachCards_num, photo, user_id, user_email, desc, created_id, user_birth, interest, killingtime, mbti, user_name)
+
+                        let showeachCardsbox = new ShowEachCardsBox(userUniqueId, eachCards_num, photo, user_id, user_email, desc, created_id, user_birth, interest, killingtime, mbti, user_name)
                         showeachCardsbox.Showeachcardsmethod()
                     }
                 }
             })
 
             class ShowEachCardsBox {
-                constructor(eachCards_num, photo, user_id, user_email, desc, created_id, user_birth, interest, killingtime, mbti, user_name) {
+                constructor(userUniqueId, eachCards_num, photo, user_id, user_email, desc, created_id, user_birth, interest, killingtime, mbti, user_name) {
                     this.eachCards_num = eachCards_num
                     this.photo = photo
                     this.user_id = user_id
@@ -121,6 +123,7 @@
                                             <div id="maker_mbti" class="eachCards__info__maker__mbti__contents">${this.mbti}</div>
                                         </div>`
                     // 나의 뉴스피드 최신순으로 불러오는 것도 추가해야함
+                    $('#contents_list').empty()
                     $('#contents_list').append(temp_html)
                 }
             }}
@@ -135,24 +138,26 @@
                         console.log(rows)
                         for (let i = 0; i < rows.length; i++) {
                             let eachCards_num = i
-                            let photo = rows[i][2]
+                            let userUniqueId = rows[i][0]
+                            let photo = rows[i][1]
+                            let user_name = rows[i][2]
                             let user_id = rows[i][3]
                             let user_email = rows[i][4]
                             let created_id = rows[i][5]
                             let desc = rows[i][6]
-                            let killingtime = rows[i][7]
-                            let mbti = rows[i][8]
+                            let mbti = rows[i][7]
+                            let killingtime = rows[i][8]
                             let user_birth = rows[i][9]
                             let interest = rows[i][10]
-                            let user_name = rows[i][11]
-                            let showeachCardsbox = new ShowEachCardsBox(eachCards_num, photo, user_id, user_email, desc, created_id, user_birth, interest, killingtime, mbti, user_name)
+
+                            let showeachCardsbox = new ShowEachCardsBox(userUniqueId, eachCards_num, photo, user_id, user_email, desc, created_id, user_birth, interest, killingtime, mbti, user_name)
                             showeachCardsbox.Showeachcardsmethod()
                         }
                     }
                 })
 
             class ShowEachCardsBox {
-                constructor(eachCards_num, photo, user_id, user_email, desc, created_id, user_birth, interest, killingtime, mbti, user_name) {
+                constructor(userUniqueId, eachCards_num, photo, user_id, user_email, desc, created_id, user_birth, interest, killingtime, mbti, user_name) {
                     this.eachCards_num = eachCards_num
                     this.photo = photo
                     this.user_id = user_id
@@ -171,7 +176,7 @@
                                             <form class="row g-3">
                                                 <div class="profile__image">
                                                     <div class="eachCards__avatar">
-                                                        <span id="modal__avatar__photo"><img src="${this.photo}"></span>
+                                                        <span id="modal__avatar__photo"><img id="myPageProfileImg" src="${this.photo}"></span>
                                                     </div>
                                                 </div>
                                                 <div class="col-mb-4">
@@ -181,7 +186,7 @@
                                                 <div class="white__space"><span id="showNoneFileError" style="font-size:0.8em; color: red;"></span></div>
                                                 <div class="col-mb-4">
                                                     <label htmlFor="inputname" class="col-sm-2 col-form-label">이름<span
-                                                        class="essential">*</span></label>
+                                                        class="essential">*</span></label><span id="nameValidationMsg" style="font-size: 0.8em; color:red;"></span>
                                                     <div class="col-sm-12">
                                                         <input type="text" class="form-control" id="inputname" value=${this.user_name} required>
                                                     </div>
@@ -210,7 +215,7 @@
                                             </form>
                                         </div>
                                         <div class="modal-footer">
-                                            <button
+                                            <button onclick="eachCards__listing()"
                                                     type="button"
                                                     class="btn btn-secondary"
                                                     data-bs-dismiss="modal"
@@ -247,6 +252,25 @@
             //     });
             // }
 
+            function saveCharacters(category, content){
+
+            console.log(category);
+            console.log(content);
+
+            $.ajax({
+                    type: 'POST',
+                    url: '/saveCharacters',
+                    data: {
+                        categoryGive: category,
+                        contentGive: content},
+                    success: function (response){
+
+                    }
+                })
+
+                return
+            }
+
 
             function birth_addinput() {
                 const writebirth = $('#maker_birth').text();
@@ -254,6 +278,7 @@
                 $('#maker_birth, #birth_new_edit').empty();
                 $('#maker_birth').append($("<input/>", {id: "maker_contents", type: "text", value: writebirth}))
                 $('#birth_new_edit').append(savebirth);
+
             }
 
             function birth_deleteinput() {
@@ -262,6 +287,9 @@
                 $('#maker_birth, #birth_new_edit').empty();
                 $('#maker_birth').append(inputbirth)
                 $("#birth_new_edit").append(editbirth);
+                saveCharacters('user_birth', inputbirth);
+
+
             }
 
             function interest_addinput() {
@@ -278,6 +306,7 @@
                 $('#maker_interest, #interest_new_edit').empty();
                 $('#maker_interest').append(inputinterest)
                 $("#interest_new_edit").append(editinterest);
+                saveCharacters('interest', inputinterest);
             }
 
             function killingtime_addinput() {
@@ -298,6 +327,7 @@
                 $('#maker_killingtime, #killingtime_new_edit').empty();
                 $('#maker_killingtime').append(inputkillingtime)
                 $("#killingtime_new_edit").append(editkillingtime);
+                saveCharacters('killingtime', inputkillingtime);
             }
 
             function mbti_addinput() {
@@ -314,6 +344,8 @@
                 $('#maker_mbti, #mbti_new_edit').empty();
                 $('#maker_mbti').append(inputmbti)
                 $("#mbti_new_edit").append(editmbti);
+                saveCharacters('mbti', inputmbti);
+
             }
 
     </script>
