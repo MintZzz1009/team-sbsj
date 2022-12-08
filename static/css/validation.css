@@ -1,0 +1,16 @@
+:root {
+  --main-bg-color: floralwhite;
+  --article-bg-color: white;
+
+  --main-font-family: "Jua", sans-serif;
+  --title-font-color: black;
+  --sub-font-color: rgba(0, 0, 0, 0.3);
+
+  --article-border: 2px solid gainsboro;
+
+  --basic-padding-margin: 0.625rem;
+
+  --hover-box-shadow-article: 0.5rem 1rem 1rem rgba(0, 0, 0, 0.5);
+  --hover-transform: translateY(-0.4rem);
+  --hover-transition: all 0.2s ease-in-out;
+}

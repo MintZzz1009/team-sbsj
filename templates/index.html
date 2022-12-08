@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+            crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
+    <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"
+    ></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script
+            src="https://kit.fontawesome.com/ec13307674.js"
+            crossorigin="anonymous"
+    ></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.1.js"
+            integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+    <title>Document</title>
+    <link rel="stylesheet" href="../static/css/styles.css"/>
+    <script src="../static/JS/toggle.js"></script>
+    <script src="../static/JS/posting.js"></script>
+</head>
+<body>
+<header>
+    <div class="header__column">
+        <div id="sbsj-signature"></div>
+        <h1>상부삼조</h1>
+
+    </div>
+    <div class="header__column">
+        {% if session %}
+        {% include '/header/hello-user.html' %}
+        {% else %}
+        {% include '/header/login-button.html' %}
+        {% include '/header/signup-button.html' %}
+        {% endif %}
+        <div id="now-session" style="display: none">현재 세션은: {{ session }}</div>
+        <script>console.log($('#now-session').text())</script>
+
+    </div>
+</header>
+<section id="mainSection">
+    <div id="topics">
+
+        <div id="topics__title">
+            <div id="toggle-topics"><i class="fa-solid fa-sm fa-play"></i></div>
+            <div>topics</div>
+        </div>
+        <div id="topics__categories">
+            <button class="topics__buttons">🌕 전체</button>
+            <button class="topics__buttons">📡 중개 플랫폼</button>
+            <button class="topics__buttons">📷 라이프스타일</button>
+            <button class="topics__buttons">💰 금융</button>
+            <button class="topics__buttons">👫 소셜</button>
+            <button class="topics__buttons">🎙 미디어</button>
+            <button class="topics__buttons">✏ 교육</button>
+            <button class="topics__buttons">🚲 생산성</button>
+            <button class="topics__buttons">🔗 블록체인</button>
+            <button class="topics__buttons">💻 노코드</button>
+            <button class="topics__buttons">🤖 인공지능</button>
+            <button class="topics__buttons">🏘 커뮤니티</button>
+            <button class="topics__buttons">📊 분석툴</button>
+            <button class="topics__buttons">🎨 디자인</button>
+        </div>
+    </div>
+    <div id="contents">
+        <div id="membersCards">
+            <div id="membersCards__title">상부삼조 회원들</div>
+            <div id="membersCards__list">
+                <a href="#" class="membersCards__list__eachCards">
+                    <div class="eachCards__inner-content-wrapper">
+                        <div class="eachCards__avatar"></div>
+                        <div class="eachCards__info">
+                            <div class="eachCards__info__id">display ID</div>
+                            <div class="eachCards__info__email">display Email</div>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="membersCards__list__eachCards">
+                    <div class="eachCards__inner-content-wrapper">
+                        <div class="eachCards__avatar"></div>
+                        <div class="eachCards__info">
+                            <div class="eachCards__info__id">display ID</div>
+                            <div class="eachCards__info__email">display Email</div>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="membersCards__list__eachCards">
+                    <div class="eachCards__inner-content-wrapper">
+                        <div class="eachCards__avatar"></div>
+                        <div class="eachCards__info">
+                            <div class="eachCards__info__id">display ID</div>
+                            <div class="eachCards__info__email">display Email</div>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="membersCards__list__eachCards">
+                    <div class="eachCards__inner-content-wrapper">
+                        <div class="eachCards__avatar"></div>
+                        <div class="eachCards__info">
+                            <div class="eachCards__info__id">display ID</div>
+                            <div class="eachCards__info__email">display Email</div>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="membersCards__list__eachCards">
+                    <div class="eachCards__inner-content-wrapper">
+                        <div class="eachCards__avatar"></div>
+                        <div class="eachCards__info">
+                            <div class="eachCards__info__id">display ID</div>
+                            <div class="eachCards__info__email">display Email</div>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="membersCards__list__eachCards">
+                    <div class="eachCards__inner-content-wrapper">
+                        <div class="eachCards__avatar"></div>
+                        <div class="eachCards__info">
+                            <div class="eachCards__info__id">display ID</div>
+                            <div class="eachCards__info__email">display Email</div>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="membersCards__list__eachCards">
+                    <div class="eachCards__inner-content-wrapper">
+                        <div class="eachCards__avatar"></div>
+                        <div class="eachCards__info">
+                            <div class="eachCards__info__id">display ID</div>
+                            <div class="eachCards__info__email">display Email</div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div id="writeNewPost">
+            <a>
+                <div>어떤 이야기를 나누고 싶나요?</div>
+                <div><i class="fa-solid fa-pencil"></i></div>
+            </a>
+        </div>
+        <div id="newsfeed">
+
+            <div class="newsfeed__header">
+                <div class="newsfeed__header__column">뉴스피드</div>
+                <div class="newsfeed__header__column">
+                    <!-- Example single danger button -->
+                    <div class="btn-group">
+                        <button
+                                type="button"
+                                class="btn btn-warning btn-sm dropdown-toggle"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                        >
+                            Action
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider"/>
+                            </li>
+                            <li><a class="dropdown-item" href="#">Separated link</a></li>
+                        </ul>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="newsfeed__main" id="newsfeed__expansion">
+
+        </div>
+    </div>
+
+    {% include 'components/write-new-post-modal.html' %}
+</section>
+<footer>footer</footer>
+<script></script>
+</body>
+
+</html>

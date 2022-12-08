@@ -1,0 +1,162 @@
+body {
+    height: 100%;
+}
+
+.modal-write {
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hidden {
+    display: none;
+}
+
+.modal__overlay {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    position: absolute;
+}
+
+.modal__content {
+    position: fixed;
+    background-color: #fefaf0;
+    padding: 30px 50px;
+    text-align: center;
+    position: relative;
+    width: 80%;
+    height: 90%;
+    top: 0px;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+
+.modal__posting_title {
+    border-radius: 10px;
+    background-color: white;
+    border: #f3c530 solid 1px;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 80px auto 80px;
+}
+
+.modal__posting_title > a > input {
+    font-size: xx-large;
+    text-align: center;
+    border: 0;
+    width: 100%;
+}
+
+.modal__sbsj_img {
+    overflow: hidden;
+}
+
+.modal__sbsj_img_img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+.modal__posting_content {
+    border: #f3c530 solid 1px;
+    border-radius: 10px;
+    background-color: white;
+    display: flex;
+    text-align: left;
+    padding: 10px;
+    margin-top: 20px;
+    height: 80%;
+}
+
+.modal__posting_text {
+
+    width: 100%;
+    height: 100%;
+}
+
+.modal__posting_text > textarea {
+    padding: 10px;
+    border: 0;
+    width: 100%;
+    height: 100%;
+    outline: none;
+    resize: none;
+}
+
+.modal__posting_topic {
+    width: 200px;
+
+    position: relative;
+    align-items: center;
+}
+
+.topic_val_get_btn {
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+}
+
+.form-check {
+    margin: 10px;
+}
+
+#topics {
+    display: flex;
+    flex-direction: column;
+}
+
+#topics__title {
+    display: flex;
+    padding: 10px;
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+#topics__title > i {
+    margin-right: 10px;
+}
+
+#posting_topic {
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+}
+
+#posting_topic::-webkit-scrollbar {
+    display: none;
+}
+
+.posting__topics__buttons {
+    text-align: left;
+    padding: 7px 14px;
+    margin: 3px;
+    font-size: 15px;
+    border: none;
+    border: 2px solid transparent;
+    border-radius: 15px;
+    background: transparent;
+    transition: all 0.2s ease-in-out;
+}
+
+.posting__topics__buttons:hover {
+    background: white;
+    border: 2px solid #ffc107;
+}
+
+
+
+
+
+
+

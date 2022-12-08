@@ -1,0 +1,20 @@
+
+
+
+로그인, 회원가입 - 모달창 꾸미기 / 로그인 회원가입 연결
+
+
+뉴스피드 - 모달창 꾸미기 , 게시글 작성 / 메인페이지에 모든 newsfeed 출력
+방명록 디자인 / 댓글 입출력, 수정, 삭제
+
+
+멤버 카드 - 클릭 시 마이페이지 꾸미기 / 나의 뉴스피드 수정, 삭제, 조회 / 프로필 수정, 삭제 
+
+
+topics - 클릭시 같은 태그를 가진 newfeed 출력 / 마이페이지 안에 나의 newsfeed 만 출력
+
+
+SA 링크: https://milb.tistory.com/entry/%EC%83%81%EB%B6%80%EC%82%BC%EC%A1%B0-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-SA
+github 링크: https://github.com/rookas33/SBSJ
+
+
