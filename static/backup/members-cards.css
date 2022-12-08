@@ -1,0 +1,67 @@
+/* member cards */
+#membersCards {
+  display: flex;
+  flex-direction: column;
+}
+
+#membersCards__title {
+  padding: 10px;
+  font-size: 30px;
+}
+
+#membersCards__list {
+  display: flex;
+  overflow-x: scroll;
+  padding: 10px 12px;
+}
+
+#membersCards__list::-webkit-scrollbar {
+  height: 5px;
+  background-color: transparent;
+}
+
+#membersCards__list::-webkit-scrollbar-thumb {
+  background-color: gainsboro;
+  border-radius: 10px;
+}
+
+.membersCards__list__eachCards {
+  border-radius: 15px;
+  padding: 5px;
+  margin-right: 10px;
+  min-width: 10vw;
+  background: white;
+  border: 2px solid gainsboro;
+  transition: all 0.2s ease-in-out;
+}
+
+.membersCards__list__eachCards:hover {
+  box-shadow: 3px 7px 7px rgba(0, 0, 0, 0.7);
+  transform: translateY(-5px);
+}
+
+.eachCards__inner-content-wrapper {
+  display: flex;
+}
+
+.eachCards__avatar {
+  width: 2.5vw;
+  height: 2.5vw;
+  min-width: 20px;
+  min-height: 20px;
+  border: 2px solid black;
+  border-radius: 50%;
+  margin-right: 5px;
+  background: white;
+}
+
+.eachCards__info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  font-weight: bold;
+}
+
+.eachCards__info__email {
+  color: rgba(0, 0, 0, 0.3);
+}
