@@ -4,7 +4,6 @@ import pymysql
 from werkzeug.utils import secure_filename
 import os
 
-
 from datetime import datetime
 
 app = Flask(__name__)
@@ -160,7 +159,6 @@ def save_comment():
     db.commit()
     db.close()
 
-
     return jsonify({"msg": "댓글작성 완료!"})
 
 
@@ -177,8 +175,8 @@ def show_comment():
     rows = curs.fetchall()
 
     user_list = []
-    
-    for list in rows:  
+
+    for list in rows:
         if pid_receive == list[4]:
             temp = {
                 'comment_id': list[0],
@@ -188,7 +186,7 @@ def show_comment():
             }
 
             user_list.append(temp)
-            
+
     return jsonify({'msg': user_list})
 
 
@@ -208,21 +206,23 @@ def update_comment():
     db.close()
     return jsonify({'msg': '수정 완료!'})
 
+
 # 댓글 삭제
 @app.route('/delete/comment', methods=['POST'])
 def delete_comment():
     db = pymysql.connect(host=hostname, user=username, db='sparta_sbsj', password=userpw, charset='utf8')
     curs = db.cursor()
-    
+
     delete_receive = request.form['delete_give']
 
     sql = """DELETE FROM comment WHERE comment_id = %s"""
     curs.execute(sql, (delete_receive))
-    
+
     db.commit()
     db.close()
-    
+
     return jsonify({'msg': '삭제 완료!'})
+
 
 # 게시글 작성하기
 @app.route('/mypage/newsfeed', methods=['POST'])
@@ -251,7 +251,7 @@ def post_NewNewsfeed():
 
     db.commit()
     db.close()
-    
+
     return jsonify({'msg': '등록 완료'})
 
 
