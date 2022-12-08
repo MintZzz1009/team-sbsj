@@ -81,7 +81,7 @@ function show_all_posting() {
                     <div class="newsfeed__info">
                         <a href="#" class="membersCards__list__eachCards newsfeed__writer">
                             <div class="eachCards__inner-content-wrapper">
-                                <div style="overflow: hidden;" class="eachCards__avatar"><img style="object-fit: cover; width: 100%" src="${this.user_profile_img_src}" alt="이미지" onerror="this.src='static/image/sbsj_signature.png'"></div>
+                                <div style="overflow: hidden;" class="eachCards__avatar"><img style="object-fit: cover; width: 100%; height: 100%" src="${this.user_profile_img_src}" alt="이미지" onerror="this.src='static/image/sbsj_signature.png'"></div>
                                 <div class="eachCards__info">
                                     <div class="eachCards__info__id">${this.user_id}</div>
                                     <div class="eachCards__info__email">${this.user_email}</div>
@@ -90,7 +90,7 @@ function show_all_posting() {
                         </a>
                     </div>
                     <button id="${this.posting_id}" onclick="OpenPostBox(${this.user_unique_id}, ${this.posting_id}, '${this.posting_title}', '${this.posting_text}')" class="newsfeed__previewCard">
-                        <div class="previewCard__image" style="overflow: hidden;"><img style="object-fit: cover; width: 100%" src="/static/image/fall.png"></div>
+                        <div class="previewCard__image" style="overflow: hidden;"><img style="object-fit: cover; height: 100%" src="/static/image/night.jpg"></div>
                         <div class="previewCard__contents">
                             <div class="previewCard__header">${this.posting_title}</div>
                             <div class="previewCard__desc">${this.posting_text}</div>
