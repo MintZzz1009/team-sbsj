@@ -245,6 +245,11 @@ def delete_comment():
 
     delete_receive = request.form['delete_give']
 
+    try:
+        print(type(session['uniq_id']))
+    except:
+        return jsonify({'msg': '로그인 후 작성 가능합니다.'})
+    
     sql = """DELETE FROM comment WHERE comment_id = %s"""
     curs.execute(sql, (delete_receive))
 
