@@ -1,5 +1,5 @@
 
-      const topicList = ['🌕 전체', '📡 중개 플랫폼', '📷 라이프스타일', '💰 금융', '👫 소셜',
+      const topicList_SH = ['🌕 전체', '📡 중개 플랫폼', '📷 라이프스타일', '💰 금융', '👫 소셜',
               '🎙 미디어', '✏️ 교육', '🚲 생산성', '🔗 블록체인', '💻 노코드', '🤖 인공지능',
               '🏘 커뮤니티', '📊 분석툴', '🎨 디자인'
       ]
@@ -31,7 +31,7 @@
 
               let tempHtml = ``;
               for(let j=0; j < rows[i]['topics_array'].length; j++){
-                tempHtml += `<div class="previewCard__topics__tag">${topicList[rows[i]['topics_array'][j]]}</div>`
+                tempHtml += `<div class="previewCard__topics__tag">${topicList_SH[rows[i]['topics_array'][j]]}</div>`
               }
 
               $('#newsfeed__expansion').append(`                
@@ -95,7 +95,7 @@
 
               let tempHtml = ``;
               for(let j=0; j < rows[i]['topics_array'].length; j++){
-                tempHtml += `<div class="previewCard__topics__tag">${topicList[rows[i]['topics_array'][j]]}</div>`
+                tempHtml += `<div class="previewCard__topics__tag">${topicList_SH[rows[i]['topics_array'][j]]}</div>`
               }
 
               $('#newsfeed__expansion').append(`                
@@ -148,7 +148,7 @@
                     let tempHtml = ``;
 
                     for(let j = 0; j < rows[i]['topics_array'].length; j++){
-                        tempHtml += `<div class="previewCard__topics__tag">${topicList[rows[i]['topics_array'][j]]}</div>`;
+                        tempHtml += `<div class="previewCard__topics__tag">${topicList_SH[rows[i]['topics_array'][j]]}</div>`;
                     }
 
                     if (rows[i]['user_profile_img_src'] == null){

@@ -13,7 +13,7 @@ print(os.getcwd())
 # db = pymysql.connect(host='121.166.127.220', user='haksoo', db='sparta_sbsj', password='12345678', charset='utf8')
 # db = pymysql.connect(host='localhost', user='root', db='sparta_sbsj', password='bobo1200', charset='utf8')
 hostname = '121.166.127.220'
-username = 'jungmin'
+username = 'haksoo'
 userpw = '12345678'
 
 print(os.getcwd())
@@ -331,7 +331,7 @@ def post_NewNewsfeed():
 
 
 @app.route('/mypage')
-def mymage_main():
+def mypage_main():
     return render_template('mypage.html')
 
 

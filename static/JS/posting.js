@@ -67,10 +67,10 @@ function show_all_posting() {
             this.posting_text = posting_text
             this.posting_topic = posting_topic
             this.posting_title = posting_title
-            const topicList = ['🌕 전체', '📡 중개 플랫폼', '📷 라이프스타일', '💰 금융', '👫 소셜',
-                '🎙 미디어', '✏️ 교육', '🚲 생산성', '🔗 블록체인', '💻 노코드', '🤖 인공지능',
-                '🏘 커뮤니티', '📊 분석툴', '🎨 디자인'
-            ]
+            // const topicList = ['🌕 전체', '📡 중개 플랫폼', '📷 라이프스타일', '💰 금융', '👫 소셜',
+            //     '🎙 미디어', '✏️ 교육', '🚲 생산성', '🔗 블록체인', '💻 노코드', '🤖 인공지능',
+            //     '🏘 커뮤니티', '📊 분석툴', '🎨 디자인'
+            // ]
 
         }
 
@@ -102,6 +102,10 @@ function show_all_posting() {
                 </div>
             </div>`;
             $("#newsfeed__expansion").append(temp_html);
+            const topicList = ['🌕 전체', '📡 중개 플랫폼', '📷 라이프스타일', '💰 금융', '👫 소셜',
+                '🎙 미디어', '✏️ 교육', '🚲 생산성', '🔗 블록체인', '💻 노코드', '🤖 인공지능',
+                '🏘 커뮤니티', '📊 분석툴', '🎨 디자인'
+            ]
             for (let i = 1; i <= topicList.length - 1; i++) {
                 if (this.posting_topic.includes(i) == true) {
                     temp_html = `<div class="previewCard__topics__tag">${topicList[i]}</div>`
