@@ -213,9 +213,6 @@ function OpenPostBox(user_unique_id,
     document.querySelector(".read-modal").classList.remove("read-hidden");
 }
 
-function comments_get() {
-    //댓글 조회 만들기
-}
 
 // 모달창 끄기
 function OffModal() {
