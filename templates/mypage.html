@@ -20,12 +20,12 @@
             src="https://kit.fontawesome.com/ec13307674.js"
             crossorigin="anonymous"
     ></script>
-    <script src="/static/myPageUserNameValidation.js"></script>
+    <script src="/static/JS/myPageUserNameValidation.js"></script>
     <link rel="stylesheet" href="../static/css/styles.css"/>
     <script src="../static/JS/toggle.js"></script>
     <script src="../static/JS/go-home.js"></script>
 
-    <script type="text/javascript" src="/static/topic.js"></script>
+    <script type="text/javascript" src="/static/JS/topic.js"></script>
 
     <script>
         <!-- 마이페이지의 사진, id, email, 한줄소개 보여주기-->
@@ -83,11 +83,12 @@
                     let temp_html = `<div id="membersCards">
                                             <div id="membersCards__list">
                                                 <a href="#" class="membersCards__list__eachCards mypage__card">
-                                                    <div class="eachCards__inner-content-wrapper">
-                                                        <div class="eachCards__avatar">
+                                                    <div class="eachCards__inner-content-wrapper mypage__card">
+                                                        <div class="eachCards__avatar mypage__card">
                                                             <span id="avatar__photo"><img src="${this.photo}"></span>
+
                                                         </div>
-                                                        <div class="eachCards__info">
+                                                        <div class="eachCards__info mypage__card">
                                                             <div class="eachCards__info__id">${this.user_id}</div>
                                                             <div class="eachCards__info__email">${this.user_email}</div>
                                                             <div class="eachCards__info__about">${this.desc}</div>
@@ -100,6 +101,7 @@
                                                                     data-bs-toggle="modal"
                                                                     data-bs-target="#eachCards__info__editmodal"
                                                             ><i class="fa-solid fa-pencil"></i>
+                                                            </button>
                                                         </div>
                                                     </div>
                                                 </a>
@@ -359,7 +361,7 @@
 
     </script>
     <title>개인페이지</title>
-    <link rel="stylesheet" href="../static/styles.css"/>
+    <link rel="stylesheet" href="../static/css/styles.css"/>
 </head>
 <body>
 <header>
