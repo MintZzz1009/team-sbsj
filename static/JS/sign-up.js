@@ -185,6 +185,9 @@ function totalConfirm() {
     if (!$('#user_email').hasClass('is-valid')) {
         return alert('이메일이 올바른지 확인해주세요')
     }
+
+    myPageProfileImgUpload()
+
     sign_up()
 }
 

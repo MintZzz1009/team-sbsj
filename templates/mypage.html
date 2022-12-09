@@ -30,7 +30,7 @@
         <!-- 마이페이지의 사진, id, email, 한줄소개 보여주기-->
         $(document).ready(function () {
             eachCards__listing()
-            showNewsfeedOnlyMine($('#userIdValue').text())
+
             console.log("sfd" + $('#userIdValue').text())
             console.log('dsf')
         });
@@ -133,6 +133,7 @@
                     // 나의 뉴스피드 최신순으로 불러오는 것도 추가해야함
                     $('#contents_list').empty()
                     $('#contents_list').append(temp_html)
+                    showNewsfeedOnlyMine($('#userIdValue').text())
                 }
             }}
 
@@ -188,7 +189,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-mb-4">
-                                                    <div style="margin-bottom: 10px">프로필 파일 선택</div>
+                                                    <div style="margin-bottom: 10px">프로필 파일 선택       <span id="extensionError" style="font-size: 0.8em; color:red;"> </span></div>
                                                     <input type="file" id="myPageProfileImgFileInput" class="form-control" aria-label="file example" required>
                                                 </div>
                                                 <div class="white__space"><span id="showNoneFileError" style="font-size:0.8em; color: red;"></span></div>
@@ -411,20 +412,20 @@
             <div>topics</div>
         </div>
         <div id="topics__categories">
-          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopic(0)">🌕 전체</button>
-          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopic(1)">📡 중개 플랫폼</button>
-          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopic(2)">📷 라이프스타일</button>
-          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopic(3)">💰 금융</button>
-          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopic(4)">👫 소셜</button>
-          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopic(5)">🎙 미디어</button>
-          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopic(6)">✏️ 교육</button>
-          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopic(7)">🚲 생산성</button>
-          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopic(8)">🔗 블록체인</button>
-          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopic(9)">💻 노코드</button>
-          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopic(10)">🤖 인공지능</button>
-          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopic(11)">🏘 커뮤니티</button>
-          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopic(12)">📊 분석툴</button>
-          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopic(13)">🎨 디자인</button>
+          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopicOnMypage(0)">🌕 전체</button>
+          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopicOnMypage(1)">📡 중개 플랫폼</button>
+          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopicOnMypage(2)">📷 라이프스타일</button>
+          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopicOnMypage(3)">💰 금융</button>
+          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopicOnMypage(4)">👫 소셜</button>
+          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopicOnMypage(5)">🎙 미디어</button>
+          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopicOnMypage(6)">✏️ 교육</button>
+          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopicOnMypage(7)">🚲 생산성</button>
+          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopicOnMypage(8)">🔗 블록체인</button>
+          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopicOnMypage(9)">💻 노코드</button>
+          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopicOnMypage(10)">🤖 인공지능</button>
+          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopicOnMypage(11)">🏘 커뮤니티</button>
+          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopicOnMypage(12)">📊 분석툴</button>
+          <button class="topics__buttons" onclick = "showNewsfeedFilteredByTopicOnMypage(13)">🎨 디자인</button>
         </div>
     </div>
     <div id="contents">

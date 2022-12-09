@@ -13,7 +13,7 @@ print(os.getcwd())
 # db = pymysql.connect(host='121.166.127.220', user='haksoo', db='sparta_sbsj', password='12345678', charset='utf8')
 # db = pymysql.connect(host='localhost', user='root', db='sparta_sbsj', password='bobo1200', charset='utf8')
 hostname = '121.166.127.220'
-username = 'jungmin'
+username = 'seunghun'
 userpw = '12345678'
 
 print(os.getcwd())
@@ -67,6 +67,21 @@ def sign_up():
     sql = "insert into user (user_id, user_pw, user_name, user_email) values(%s, %s, %s, %s);"
 
     curs.execute(sql, data_receive)
+
+    sql = '''
+        select user_unique_id from user
+        where user_id = %s
+    '''
+
+    curs.execute(sql, user_id_receive)
+    userUniqueId = curs.fetchall()[0][0]
+
+    sql = '''
+        insert into mypage_info (user_unique_id) value (%s)
+    '''
+
+    curs.execute(sql, userUniqueId)
+
     db.commit()
     db.close()
 
@@ -432,6 +447,7 @@ def upload():
     # db = pymysql.connect(dbAdress)
     curs = db.cursor()
     # file = request.files.getlist('files[0]')
+    extensionValidationArray = ['.PNG', '.JPG', '.JPEG', '.GIF']
     dir = "static/img/profileImg/"
     # dir = "C:\\project/"
     file = request.files['profileImg']
@@ -454,6 +470,13 @@ def upload():
         extension = "." + temp0
     else:
         extension = temp1
+
+    print(extension.upper())
+
+    if extension.upper() not in extensionValidationArray:
+        return jsonify({"msg": "extension"})
+
+
 
     now = datetime.now().strftime('%Y%m%d_%H%M%S')
 
@@ -587,6 +610,86 @@ def showNewsfeedFilteredByTopic():
 
     return jsonify({'msg': 'success', 'result': result})
 
+@app.route('/showNewsfeedFilteredByTopicOnMypage', methods=['POST'])
+def showNewsfeedFilteredByTopicOnMypage():
+    topicNumReceive = int(request.form['topicNumGive'])
+    dic = {}
+    result = []
+
+    db = pymysql.connect(host=hostname, user=username, db='sparta_sbsj', password=userpw, charset='utf8')
+    # db = pymysql.connect(host='localhost', user='root', db='sparta_sbsj', password='f2143142', charset='utf8')
+    # db = pymysql.connect(dbAdress)
+    curs = db.cursor()
+
+    # posting_id 찾기
+    sql = '''
+            select posting_id from topics_in_posting
+            where topic_num_%s = 1
+            order by posting_id desc
+        '''
+
+    # curs.execute(sql)
+    curs.execute(sql, topicNumReceive)
+    rows = curs.fetchall()
+
+    # print(rows)
+    # print(len(rows))
+
+    for i in range(len(rows)):  # posting_id로 찾기
+        sql = '''
+                select user_unique_id, posting_title, posting_text, posting_topic from posting
+                where posting_id = %s and user_unique_id = %s
+            '''
+
+        curs.execute(sql, (rows[i][0], session['uniq_id']))
+        temp = curs.fetchall()
+
+        for j in range(len(temp)):  # posting 테이블에서 찾은거 넣기
+
+            sql = '''
+                    select user_name, user_email, user_profile_img_src  from user
+                    where user_unique_id = %s
+                '''
+
+            curs.execute(sql, temp[j][0])
+            userInfo = curs.fetchall()
+
+            # sql = '''
+            #     select * from topics_in_posting
+            #     where posting_id = %s
+            # '''
+            #
+            # curs.execute(sql, rows[i][0])
+            # topicsInfo = curs.fetchall()
+            # topicsArray = []
+            #
+            # for k in range(1, len(topicsInfo)):
+            #     if topicsInfo[k] == 1:
+            #         topicsArray.append(k)
+
+            topicsArray = temp[j][3].split(" ")
+
+            dic = {
+                'posting_id': rows[i][0],
+                'user_name': userInfo[0][0],
+                'user_email': userInfo[0][1],
+                'user_profile_img_src': userInfo[0][2],
+                'user_unique_id': temp[j][0],
+                'posting_title': temp[j][1],
+                'posting_text': temp[j][2],
+                'topics_array': topicsArray
+            }
+
+            result.append(dic)
+
+    # print(result)
+
+    db.commit()
+    db.close()
+
+    return jsonify({'msg': 'success', 'result': result})
+
+
 
 @app.route('/showNewsfeedOnlyMine', methods=['POST'])
 def showNewsfeedOnlyMine():
@@ -634,6 +737,38 @@ def showNewsfeedOnlyMine():
 
     return jsonify({'result': result})
 
+@app.route('/showUsersByRandom', methods=['GET'])
+def showUsersByRandom():
+    db = pymysql.connect(host=hostname, user=username, db='sparta_sbsj', password=userpw, charset='utf8')
+    curs = db.cursor()
+
+    result = []
+    dic = {}
+
+    sql = '''
+        select user_unique_id, user_name, user_email, user_profile_img_src from user
+        order by rand()
+        limit 7
+    '''
+
+    curs.execute(sql)
+    rows = curs.fetchall()
+
+    for i in range(len(rows)):
+
+        dic = {
+            'user_unique_id': rows[i][0],
+            'user_name': rows[i][1],
+            'user_email': rows[i][2],
+            'user_profile_img_src': rows[i][3]
+        }
+
+        result.append(dic)
+
+    db.commit()
+    db.close()
+
+    return jsonify({'result': result})
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=5000, debug=True)
