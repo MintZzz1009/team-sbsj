@@ -33,3 +33,7 @@ header {
   background-size: cover;
   margin-right: 10px;
 }
+
+#go-home {
+  cursor: pointer;
+}

@@ -12,6 +12,9 @@
 /*멤버카드*/
 @import url(members-cards.css);
 
+/*개인페이지*/
+@import url(mypage.css);
+
 /*글 작성*/
 @import url(write-new-post.css);
 @import url(write-new-post-modal.css);

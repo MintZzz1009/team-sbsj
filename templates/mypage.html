@@ -23,6 +23,7 @@
     <script src="/static/myPageUserNameValidation.js"></script>
     <link rel="stylesheet" href="../static/css/styles.css"/>
     <script src="../static/JS/toggle.js"></script>
+    <script src="../static/JS/go-home.js"></script>
 
     <script type="text/javascript" src="/static/topic.js"></script>
 
@@ -81,7 +82,7 @@
                 Showeachcardsmethod() {
                     let temp_html = `<div id="membersCards">
                                             <div id="membersCards__list">
-                                                <a href="#" class="membersCards__list__eachCards">
+                                                <a href="#" class="membersCards__list__eachCards mypage__card">
                                                     <div class="eachCards__inner-content-wrapper">
                                                         <div class="eachCards__avatar">
                                                             <span id="avatar__photo"><img src="${this.photo}"></span>
@@ -362,7 +363,7 @@
 </head>
 <body>
 <header>
-    <div class="header__column">
+    <div class="header__column" id="go-home">
         <div id="sbsj-signature"></div>
         <h1>상부삼조</h1>
 
