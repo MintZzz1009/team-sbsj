@@ -24,3 +24,9 @@
     text-overflow: ellipsis;
 }
 
+.newsfeed__newsfeed.my-posting__newsfeed {
+    border-top: 2px solid black;
+    margin-top: 100px;
+    padding-top: 20px;
+}
+

@@ -163,7 +163,7 @@
                     console.log(rows[i]['posting_text'].length);
 
                     $('#newsfeed__expansion').append(`                
-                        <div class="newsfeed__newsfeed">
+                        <div class="newsfeed__newsfeed my-posting__newsfeed">
                             <div class="newsfeed__info">
                                 <a href="#" class="membersCards__list__eachCards newsfeed__writer">
                                     <div class="eachCards__inner-content-wrapper">
