@@ -122,11 +122,6 @@
   color: red
 }
 
-.form__id__email {
-  display: grid;
-  grid-template-columns: 200px auto 1px;
-}
-
 .eachCards_info_maker__space {
   display: flex;
   justify-content: space-between;

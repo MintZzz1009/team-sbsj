@@ -12,9 +12,9 @@ app.secret_key = "My_Secret_Key"
 print(os.getcwd())
 # db = pymysql.connect(host='121.166.127.220', user='haksoo', db='sparta_sbsj', password='12345678', charset='utf8')
 # db = pymysql.connect(host='localhost', user='root', db='sparta_sbsj', password='bobo1200', charset='utf8')
-hostname = 'localhost'
-username = 'root'
-userpw = 'bobo1200'
+hostname = '121.166.127.220'
+username = 'haksoo'
+userpw = '12345678'
 
 print(os.getcwd())
 

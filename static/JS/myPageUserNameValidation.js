@@ -155,11 +155,11 @@ function showUsersByRandom(){
                 }
 
                 tempHtml = `<a href="#" class="membersCards__list__eachCards">
-                                <div class="eachCards__inner-content-wrapper">
-                                    <img src="${rows[i]['user_profile_img_src']}" class="eachCards__avatar">
+                                <div class="eachCards__inner-content-wrapper random-card">
+                                    <img width="60px" height="60px" src="${rows[i]['user_profile_img_src']}" class="eachCards__avatar random-card">
                                     <div class="eachCards__info">
-                                        <div class="eachCards__info__id">${rows[i]['user_name']}</div>
-                                        <div class="eachCards__info__email" style="font-size: 0.8em">${rows[i]['user_email']}</div>
+                                        <div class="eachCards__info__id random-card">${rows[i]['user_name']}</div>
+                                        <div class="eachCards__info__email random-card" style="font-size: 0.8em">${rows[i]['user_email']}</div>
                                     </div>
                                 </div>
                             </a>`

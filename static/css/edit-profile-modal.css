@@ -1,0 +1,31 @@
+.modal-content.edit__profile {
+    width: 30vw;
+}
+
+
+.eachCards__avatar.profile__edit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 200px;
+    border: none;
+    background-color: rgba(0,0,0,0);
+}
+
+.form__id__email {
+    display: block;
+}
+
+edit__profile__id-email {
+
+}
+
+.edit__profile__id-email__title {
+    margin-right: 20px;
+}
+
+#staticId, #staticEmail {
+    margin-left: 10px;
+    color: #888888;
+}

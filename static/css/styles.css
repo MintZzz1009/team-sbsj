@@ -11,9 +11,13 @@
 
 /*멤버카드*/
 @import url(members-cards.css);
+@import url(random-card.css);
 
 /*개인페이지*/
 @import url(mypage.css);
+
+/*프로필 수정 페이지*/
+@import url(edit-profile-modal.css);
 
 /*글 작성*/
 @import url(write-new-post.css);
@@ -78,6 +82,12 @@ footer {
   background-color: white;
   border-top: 2px solid #ffc107;
   z-index: 2;
+    padding: 20px;
+    font-family: "Jua", sans-serif;
+    font-size: 15px;
+}
+footer p {
+    padding: 5px;
 }
 
 /*모달창 뒷배경*/
@@ -89,3 +99,5 @@ footer {
 .sign-up__required {
   color: red;
 }
+
+

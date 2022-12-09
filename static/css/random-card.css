@@ -1,0 +1,26 @@
+.eachCards__inner-content-wrapper.random-card {
+    max-height: 90px;
+    display: flex;
+    align-items: center;
+}
+
+.eachCards__avatar.random-card {
+    margin-right: 10px;
+}
+
+
+.eachCards__info__id.random-card {
+    width: 120px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+.eachCards__info__email.random-card {
+    width: 120px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
