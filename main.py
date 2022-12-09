@@ -358,7 +358,7 @@ def mypage_reload():
 
     return jsonify({'eachCards__list': rows})
 
-
+# 마이페이지 수정
 @app.route("/mypage/mypage_modal_reload", methods=["GET"])
 def mypage_modal_reload():
     db = pymysql.connect(host=hostname, user=username, db='sparta_sbsj', password=userpw, charset='utf8')
@@ -423,7 +423,7 @@ def saveCharacters():
 
     return jsonify({'msg': '저장완료'})
 
-
+# 마이페이지 수정
 @app.route('/saveUserInfoInMyPage', methods=['POST'])
 def saveUserInfoInMyPage():
     db = pymysql.connect(host=hostname, user=username, db='sparta_sbsj', password=userpw, charset='utf8')
