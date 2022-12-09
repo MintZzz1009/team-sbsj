@@ -227,12 +227,26 @@ def update_comment():
     db = pymysql.connect(host=hostname, user=username, db='sparta_sbsj', password=userpw, charset='utf8')
     curs = db.cursor()
 
+    try:
+        print(type(session['uniq_id']))
+    except:
+        return jsonify({'msg': '로그인 후 작성 가능합니다.'})
+
+    
     edit_done_receive = request.form['edit_done_give']
     edit_comment_id_receive = request.form['edit_comment_id_give']
-
-    sql = """UPDATE comment SET comments = %s WHERE comment_id = %s"""
-    curs.execute(sql, (edit_comment_id_receive, edit_done_receive))
-
+    user_name_receive = request.form['user_name_give']
+    user_name = session['user_name']
+    
+    print(user_name_receive)
+    print(user_name)
+    
+    if user_name_receive == user_name:
+        sql = """UPDATE comment SET comments = %s WHERE comment_id = %s"""
+        curs.execute(sql, (edit_comment_id_receive, edit_done_receive))
+    else:
+        return jsonify({'msg': user_name + '님이 작성한 글이 아닙니다.'})
+    
     db.commit()
     db.close()
     return jsonify({'msg': '수정 완료!'})
