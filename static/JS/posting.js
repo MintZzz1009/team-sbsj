@@ -152,7 +152,7 @@ function OpenPostBox(user_unique_id,
                                         </div>
                                     </div>
                                     <div class="comment-button">
-                                        <button onclick="addInput(${comment_id})" type="button" class="btn btn-warning button1">수정</button>
+                                        <button onclick="addInput(${comment_id},'${user_name}')" type="button" class="btn btn-warning button1">수정</button>
                                         <button onclick="delete_comment(${comment_id})" type="button" class="btn btn-warning button1">삭제</button>
                                     </div>
                                 </div>
@@ -280,33 +280,38 @@ function save_comment(poster_id) {
 }
 
 // 댓글 수정
-function addInput(comment_id) {
+function addInput(comment_id,user_name) {
+  let user_name_id = user_name
+  console.log(`${user_name_id} 비교할 유저 id`)
   let a = $(`#contain_${comment_id}`)
   let addinput = $(`#span_${comment_id}`).text();
   let button_text = "수정"
 
+  console.log(user_name_id)
+  
   a.empty();
   a.append($("<input>", { id: "abcd", type: "text", value: addinput, style: "width: 90%; height: 70px; background-color: #fdf5df; border-radius: 30px; border-color: #f8e1a1; text-align: center; outline: none;"}));
   a.append($("<img>", {class: "img-button", id: `edit-${comment_id}`, src: "/static/image/edit.png", style: "width: 6%; margin: auto; border: 0;"}));
   $(`#edit-${comment_id}`).click(function () {
-    update_comment(comment_id);
+    update_comment(comment_id,user_name_id);
 
   });
 }
 
 // 댓글 수정 완료
 
-function update_comment(comment_id) {
-
+function update_comment(comment_id,name) {
+  let user_name_id = name
   let edit_comment_id = $(`#contain_${comment_id} input`).val();
 
     $.ajax({
         type: "POST",
         url: "/update/comment",
-        data: {edit_done_give: comment_id, edit_comment_id_give: edit_comment_id},
+        data: {edit_done_give: comment_id, edit_comment_id_give: edit_comment_id, user_name_give: user_name_id},
         success: function (response) {
-            alert(response["msg"])
-            window.location.reload()
+
+          alert(response["msg"])
+          window.location.reload()
         },
     });
 }

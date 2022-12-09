@@ -48,12 +48,16 @@ function saveUserInfoInMyPage(){
     if(nameValidation == false ){
         return
     }
-
+    console.log('profileImgSrc' + profileImgSrc)
     let userName = document.getElementById('inputname').value;
     let userDesc = document.getElementById('inputintroduce').value;
     let userUniqueId = "2"
     if(typeof(profileImgSrc) == "boolean"){
         profileImgSrc = null;
+        $('#extensionError').empty()
+
+    }else if(profileImgSrc.length < 2){
+        return
     }
 
     $.ajax({
@@ -102,6 +106,13 @@ function myPageProfileImgUpload(){
         processData: false,
         success: function(response){
 
+            if( response['msg'] == "extension"){
+                $('#extensionError').empty()
+                $('#extensionError').append('이미지 파일만 올려주세요')
+                return -1
+            }else{
+                $('#extensionError').empty()
+            }
             // console.log(response['msg']);
             // console.log(response['profileImgSrc'])
             document.getElementById('myPageProfileImg').setAttribute("src", response['profileImgSrc'])
@@ -120,5 +131,44 @@ function myPageProfileImgUpload(){
 
     return resultSrc
 
+}
+
+function showUsersByRandom(){
+    $.ajax({
+        type: 'GET',
+        url: '/showUsersByRandom',
+        data: {},
+        success: function(response){
+            
+            $('#membersCards__list').empty();
+
+            console.log('쇼유저');
+            let rows = response['result'];
+            let tempHtml= ``
+
+            console.log(rows);
+            console.log(rows.length);
+            for (let i = 0; i < rows.length; i++){
+
+                if(rows[i]['user_profile_img_src'] == null){
+                    rows[i]['user_profile_img_src'] = '/static/img/nullProfileImg.png'
+                }
+
+                tempHtml = `<a href="#" class="membersCards__list__eachCards">
+                                <div class="eachCards__inner-content-wrapper">
+                                    <img src="${rows[i]['user_profile_img_src']}" class="eachCards__avatar">
+                                    <div class="eachCards__info">
+                                        <div class="eachCards__info__id">${rows[i]['user_name']}</div>
+                                        <div class="eachCards__info__email" style="font-size: 0.8em">${rows[i]['user_email']}</div>
+                                    </div>
+                                </div>
+                            </a>`
+
+                $('#membersCards__list').append(tempHtml);
+
+            }
+
+        }
+    })
 }
 
