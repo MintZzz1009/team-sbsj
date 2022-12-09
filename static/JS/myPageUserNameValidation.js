@@ -31,7 +31,7 @@ function myPageUserNameValidation(){
     $('#nameValidationMsg').append("한글과 영어만으로 이름을 지어 주세요")
     return false
 }
-//
+
 // $('#inputname').focus(function (){
 //     alert('ㄹㄹ');
 //     console.log('선택');
