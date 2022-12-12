@@ -47,13 +47,20 @@
         <div id="sbsj-signature"></div>
         <h1>상부삼조</h1>
       </div>
+
       <div class="header__column">
-        {% if session %} {% include '/header/hello-user.html' %} {% else %} {%
-        include '/header/login-button.html' %} {% include
-        '/header/signup-button.html' %} {% endif %}
+
+        {% if session %}
+        {% include '/header/hello-user.html' %}
+        {% else %}
+        {% include '/header/login-button.html' %}
+        {% include '/header/signup-button.html' %}
+        {% endif %}
+
         <div id="now-session" style="display: none">
           현재 세션은: {{ session }}
         </div>
+
         <script>
           console.log($("#now-session").text());
         </script>
