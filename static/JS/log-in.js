@@ -1,4 +1,4 @@
-// 아이디 중복 확인
+// 로그인
 const LogIn = document.querySelector('#submit-login')
 LogIn.addEventListener('click', submit_log_in)
 
